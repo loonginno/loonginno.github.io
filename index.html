@@ -310,7 +310,7 @@
 
         /* 弹窗优雅过渡 */
         .welcome-modal-overlay,
-        .shop-modal-overlay,
+        .portfolio-modal-overlay,
         .wechat-modal-overlay {
             position: fixed;
             top: 0;
@@ -327,14 +327,14 @@
             transition: visibility 0.4s, background 0.4s ease, backdrop-filter 0.4s ease;
         }
         .welcome-modal-overlay.active,
-        .shop-modal-overlay.active,
+        .portfolio-modal-overlay.active,
         .wechat-modal-overlay.active {
             visibility: visible;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
         }
         .welcome-modal,
-        .shop-modal-container,
+        .portfolio-modal-container,
         .wechat-modal {
             background: var(--modal-bg);
             border-radius: 52px;
@@ -348,7 +348,7 @@
             will-change: transform, opacity;
         }
         .active .welcome-modal,
-        .active .shop-modal-container,
+        .active .portfolio-modal-container,
         .active .wechat-modal {
             transform: scale(1);
             opacity: 1;
@@ -357,7 +357,7 @@
             max-width: 460px;
             padding: 44px 36px;
         }
-        .shop-modal-container {
+        .portfolio-modal-container {
             max-width: 520px;
             padding: 40px 32px;
         }
@@ -366,7 +366,7 @@
             padding: 40px 32px 44px;
         }
         .welcome-modal h3,
-        .shop-modal-container h3,
+        .portfolio-modal-container h3,
         .wechat-modal h3 {
             font-size: 28px;
             font-weight: 600;
@@ -374,20 +374,20 @@
             color: var(--text-primary);
         }
         .welcome-modal .welcome-message,
-        .shop-modal-container p,
+        .portfolio-modal-container p,
         .wechat-modal p {
             font-size: 16px;
             line-height: 1.6;
             color: var(--text-secondary);
             margin-bottom: 32px;
         }
-        .shop-options {
+        .portfolio-options {
             display: flex;
             flex-direction: column;
             gap: 18px;
             margin-bottom: 32px;
         }
-        .shop-option {
+        .portfolio-option {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 80px;
@@ -402,16 +402,16 @@
             transition: all 0.2s ease;
             cursor: pointer;
         }
-        .shop-option .arrow {
+        .portfolio-option .arrow {
             opacity: 0.5;
             transition: transform 0.2s;
         }
-        .shop-option:hover {
+        .portfolio-option:hover {
             background: #5b3cc4;
             color: white;
             transform: translateX(6px);
         }
-        .close-shop-modal, .close-wechat-btn {
+        .close-portfolio-modal, .close-wechat-btn {
             background: transparent;
             border: 1px solid var(--border-color);
             padding: 12px 32px;
@@ -424,7 +424,7 @@
             margin-top: 8px;
             display: inline-block;
         }
-        .close-shop-modal:hover, .close-wechat-btn:hover {
+        .close-portfolio-modal:hover, .close-wechat-btn:hover {
             background: #5b3cc4;
             color: white;
             border-color: transparent;
@@ -499,7 +499,7 @@
             .hero h1 { font-size: 38px; }
             .primary-btn, .contact-btn { padding: 12px 28px; font-size: 16px; }
             .feat-card { min-width: 100%; }
-            .welcome-modal, .shop-modal-container, .wechat-modal { padding: 32px 24px; }
+            .welcome-modal, .portfolio-modal-container, .wechat-modal { padding: 32px 24px; }
             .qrcode-img { width: 160px; height: 160px; }
             .logo { font-size: 24px; }
             .logo-icon { font-size: 28px; }
@@ -521,12 +521,12 @@
     <div class="hero">
         <div class="hero-badge">✦ 独立创作者 · 设计/开发</div>
         <h1>林一 · <span class="highlight">创意无限</span></h1>
-        <div class="subhead">热爱设计、摄影与编程，分享实用工具与流量资源，让生活更高效。</div>
+        <div class="subhead">热爱设计、摄影与编程，分享美好事物，让灵感落地。</div>
     </div>
 
     <div class="action-group">
-        <button class="primary-btn" id="openShopBtn">
-            <span>📡</span> 精选流量卡
+        <button class="primary-btn" id="openPortfolioBtn">
+            <span>🎨</span> 作品集 · 创作分享
         </button>
         <button class="contact-btn" id="openWechatBtn">
             <span>💬</span> 联系我 · 微信
@@ -548,7 +548,7 @@
         <div class="feat-card">
             <div class="feat-icon">⚙️</div>
             <h3>效率工具</h3>
-            <p>分享好用软件、网站及流量卡资源，助力数字生活。</p>
+            <p>分享好用软件、网站与工作流，提升生产力。</p>
         </div>
     </div>
 
@@ -562,25 +562,25 @@
     <div class="welcome-modal">
         <h3>✨ 欢迎来到林一的主页</h3>
         <div class="welcome-message" id="customWelcomeMessage">
-            这里记录我的创作与分享。<br>点击「精选流量卡」可查看实用套餐，或通过微信与我交流。
+            这里记录我的创作与思考。<br>点击「作品集」可查看设计/摄影/开发项目，或通过微信与我交流。
         </div>
         <button class="welcome-btn" id="closeWelcomeBtn">开始探索 →</button>
     </div>
 </div>
 
-<!-- 五个流量卡选项弹窗 -->
-<div class="shop-modal-overlay" id="shopModal">
-    <div class="shop-modal-container">
-        <h3>📱 精选流量卡 · 热销推荐</h3>
-        <p>以下为高性价比官方套餐，点击直达办理页面</p>
-        <div class="shop-options">
-            <a href="#" class="shop-option" data-default="https://link1.card"><span>📱 轻享·30GB月卡</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link2.card"><span>⚡ 畅玩·100GB大流量</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link3.card"><span>💎 尊享·200GB旗舰卡</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link4.card"><span>🏢 企业团购通道</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link5.card"><span>🌐 物联网卡专享</span><span class="arrow">→</span></a>
+<!-- 个人作品集弹窗（替换原流量卡） -->
+<div class="portfolio-modal-overlay" id="portfolioModal">
+    <div class="portfolio-modal-container">
+        <h3>🎯 我的创作 · 精选项目</h3>
+        <p>点击下方链接，查看我的设计、摄影及开源作品</p>
+        <div class="portfolio-options">
+            <a href="#" class="portfolio-option" data-default="https://your-portfolio.com/design"><span>🎨 UI/UX 设计作品集</span><span class="arrow">→</span></a>
+            <a href="#" class="portfolio-option" data-default="https://your-portfolio.com/photography"><span>📸 摄影图集 · 城市漫游</span><span class="arrow">→</span></a>
+            <a href="#" class="portfolio-option" data-default="https://your-portfolio.com/dev"><span>💻 开源项目 & 小工具</span><span class="arrow">→</span></a>
+            <a href="#" class="portfolio-option" data-default="https://your-portfolio.com/blog"><span>📝 博客 · 设计思考</span><span class="arrow">→</span></a>
+            <a href="#" class="portfolio-option" data-default="https://your-portfolio.com/about"><span>✨ 关于我 & 合作联系</span><span class="arrow">→</span></a>
         </div>
-        <button class="close-shop-modal" id="closeShopBtn">关闭</button>
+        <button class="close-portfolio-modal" id="closePortfolioBtn">关闭</button>
     </div>
 </div>
 
@@ -588,7 +588,7 @@
 <div class="wechat-modal-overlay" id="wechatModal">
     <div class="wechat-modal">
         <h3>📱 扫码添加微信</h3>
-        <p>交流设计、合作或咨询流量卡，欢迎联系</p>
+        <p>交流设计、摄影或项目合作，欢迎联系</p>
         <div class="qrcode-img">
             <img id="wechatQrImg" src="https://placehold.co/400x400/e2e8f0/7c5cbf?text=我的微信二维码" alt="微信二维码">
         </div>
@@ -617,7 +617,7 @@
         const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
         const customMsg = document.getElementById('customWelcomeMessage');
         if (customMsg) {
-            customMsg.innerHTML = `🎉 欢迎！这里是林一的个人空间。<br>分享设计、摄影与实用流量资源。<br>点击下方按钮获取更多信息。`;
+            customMsg.innerHTML = `🎉 欢迎！这里是林一的个人空间。<br>分享设计、摄影与效率工具。<br>点击下方按钮查看作品集或联系我。`;
         }
         setTimeout(() => {
             if (welcomeModal) {
@@ -636,45 +636,45 @@
         closeWelcomeBtn.addEventListener('click', closeWelcome);
         welcomeModal.addEventListener('click', (e) => { if (e.target === welcomeModal) closeWelcome(); });
         
-        // 店铺弹窗
-        const shopModal = document.getElementById('shopModal');
-        const openShopBtn = document.getElementById('openShopBtn');
-        const closeShopBtn = document.getElementById('closeShopBtn');
+        // 作品集弹窗（原店铺弹窗改造）
+        const portfolioModal = document.getElementById('portfolioModal');
+        const openPortfolioBtn = document.getElementById('openPortfolioBtn');
+        const closePortfolioBtn = document.getElementById('closePortfolioBtn');
         
-        const openShopModal = () => {
-            if (shopModal.classList.contains('active')) return;
+        const openPortfolioModal = () => {
+            if (portfolioModal.classList.contains('active')) return;
             withLock(() => {
-                shopModal.classList.add('active');
+                portfolioModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             });
         };
-        const closeShopModal = () => {
-            if (!shopModal.classList.contains('active')) return;
+        const closePortfolioModal = () => {
+            if (!portfolioModal.classList.contains('active')) return;
             withLock(() => {
-                shopModal.classList.remove('active');
+                portfolioModal.classList.remove('active');
                 document.body.style.overflow = '';
             });
         };
         
-        openShopBtn.addEventListener('click', (e) => {
+        openPortfolioBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openShopModal();
+            openPortfolioModal();
         });
-        closeShopBtn.addEventListener('click', closeShopModal);
-        shopModal.addEventListener('click', (e) => { if (e.target === shopModal) closeShopModal(); });
+        closePortfolioBtn.addEventListener('click', closePortfolioModal);
+        portfolioModal.addEventListener('click', (e) => { if (e.target === portfolioModal) closePortfolioModal(); });
         
-        // 链接替换（请修改为真实链接）
-        const realLinks = [
-            'https://your-shop.com/light-card',
-            'https://your-shop.com/play-card',
-            'https://your-shop.com/premium-card',
-            'https://your-shop.com/group',
-            'https://your-shop.com/iot'
+        // 个人作品链接替换（请修改为真实链接）
+        const portfolioLinks = [
+            'https://your-portfolio.com/design',
+            'https://your-portfolio.com/photography',
+            'https://your-portfolio.com/dev',
+            'https://your-portfolio.com/blog',
+            'https://your-portfolio.com/about'
         ];
-        const shopOptions = document.querySelectorAll('.shop-option');
-        shopOptions.forEach((opt, idx) => {
-            if (idx < realLinks.length && realLinks[idx] && realLinks[idx] !== '#') {
-                opt.href = realLinks[idx];
+        const portfolioOptions = document.querySelectorAll('.portfolio-option');
+        portfolioOptions.forEach((opt, idx) => {
+            if (idx < portfolioLinks.length && portfolioLinks[idx] && portfolioLinks[idx] !== '#') {
+                opt.href = portfolioLinks[idx];
             } else {
                 const fallback = opt.getAttribute('data-default');
                 if (fallback && fallback !== '#') opt.href = fallback;
@@ -683,7 +683,7 @@
                         if (isBusy) e.preventDefault();
                         else {
                             e.preventDefault();
-                            alert('请配置真实链接（在代码 realLinks 中替换）');
+                            alert('请配置真实作品链接（在代码 portfolioLinks 中替换）');
                         }
                     });
                 }
@@ -692,7 +692,7 @@
             opt.addEventListener('click', (e) => { if (isBusy) e.preventDefault(); });
         });
         
-        // 微信二维码
+        // 微信二维码弹窗
         const wechatModal = document.getElementById('wechatModal');
         const openWechatBtn = document.getElementById('openWechatBtn');
         const closeWechatBtn = document.getElementById('closeWechatBtn');
