@@ -118,7 +118,7 @@
         }
         @keyframes softPulse {
             0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 6px rgba(91,60,196,0.5)); }
+            50% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 6px rgba(91,60,196,0.5); }
             100% { transform: scale(1); opacity: 0.9; }
         }
 
@@ -320,7 +320,7 @@
             margin-top: 20px;
         }
 
-        /* ========== 弹窗优雅过渡动画（性能优化） ========== */
+        /* ========== 弹窗优雅过渡动画（手机优化版） ========== */
         .welcome-modal-overlay,
         .shop-modal-overlay,
         .wechat-modal-overlay {
@@ -330,21 +330,29 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0);
-            backdrop-filter: blur(0px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2000;
             visibility: hidden;
-            transition: visibility 0.4s, background 0.4s ease, backdrop-filter 0.4s ease;
+            transition: visibility 0.4s, background 0.4s ease;
         }
         .welcome-modal-overlay.active,
         .shop-modal-overlay.active,
         .wechat-modal-overlay.active {
             visibility: visible;
             background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
         }
+
+        /* 仅手机禁用 blur，电脑保留 */
+        @media (min-width: 768px) {
+            .welcome-modal-overlay.active,
+            .shop-modal-overlay.active,
+            .wechat-modal-overlay.active {
+                backdrop-filter: blur(10px);
+            }
+        }
+
         .welcome-modal,
         .shop-modal-container,
         .wechat-modal {
@@ -516,8 +524,8 @@
             .logo { font-size: 24px; }
             .logo-icon { font-size: 28px; }
              .logo-main { font-size: 18px; }
-    .logo-sub { font-size: 9px; }
-    .logo-icon { width: 28px; height: 28px; }
+            .logo-sub { font-size: 9px; }
+            .logo-icon { width: 28px; height: 28px; }
         }
 /* 导航栏 Logo 区域 - 汉字上，英文下 */
 .logo-text {
@@ -634,143 +642,107 @@
 <div class="back-top" id="backTopBtn">↑</div>
 
 <script>
-    (function() {
-        let isBusy = false;
-        let modalVisible = false;
+(function() {
+    // 欢迎弹窗
+    const welcomeModal = document.getElementById('welcomeModal');
+    const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
+    const customMsg = document.getElementById('customWelcomeMessage');
 
-        function lock() { isBusy = true; }
-        function unlock() { isBusy = false; }
-        function withLock(callback) {
-            if (isBusy) return false;
-            lock();
-            callback();
-            setTimeout(unlock, 450);
-            return true;
+    if (customMsg) {
+        customMsg.innerHTML = `龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺下单后务必联系我报单，<br>全国产品店铺务必先支付费用再下单，请勿私自下单`;
+    }
+
+    setTimeout(() => {
+        if (welcomeModal) {
+            welcomeModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
+    }, 200);
 
-        // 欢迎弹窗
-        const welcomeModal = document.getElementById('welcomeModal');
-        const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
-        const customMsg = document.getElementById('customWelcomeMessage');
+    const closeWelcome = () => {
+        welcomeModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
 
-        if (customMsg) {
-            customMsg.innerHTML = `龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺下单后务必联系我报单，<br>全国产品店铺务必先支付费用再下单，请勿私自下单`;
-        }
+    closeWelcomeBtn.addEventListener('click', closeWelcome);
+    welcomeModal.addEventListener('click', (e) => {
+        if (e.target === welcomeModal) closeWelcome();
+    });
 
-        setTimeout(() => {
-            if (welcomeModal) {
-                withLock(() => {
-                    welcomeModal.classList.add('active');
-                    modalVisible = true;
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-        }, 200);
+    // 店铺弹窗
+    const shopModal = document.getElementById('shopModal');
+    const openShopBtn = document.getElementById('openShopBtn');
+    const closeShopBtn = document.getElementById('closeShopBtn');
 
-        const closeWelcome = () => {
-            withLock(() => {
-                welcomeModal.classList.remove('active');
-                modalVisible = false;
-                document.body.style.overflow = '';
-            });
-        };
+    const openShopModal = () => {
+        shopModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
 
-        closeWelcomeBtn.addEventListener('click', closeWelcome);
-        welcomeModal.addEventListener('click', (e) => {
-            if (e.target === welcomeModal) closeWelcome();
+    const closeShopModal = () => {
+        shopModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    openShopBtn.addEventListener('click', openShopModal);
+    closeShopBtn.addEventListener('click', closeShopModal);
+    shopModal.addEventListener('click', (e) => {
+        if (e.target === shopModal) closeShopModal();
+    });
+
+    // 店铺链接（流畅版）
+    const realLinks = [
+        'https://d.74tx.cn/nQYL',
+        'https://172.lot-ml.com/ProductEn/Index/65bea861799e3bbe',
+        'https://h5.gantanhao.com/?from=3%40C%40%40oGsFstqB%3BA%3FGs%3BBq%40%3F%3BF%40rG%3BqCrorA%40oE%3EoA3%40C%40%40',
+        'https://bsx.pianwen.com.cn/s/W0SleL7w',
+        'https://d.74tx.com/K3gV'
+    ];
+
+    const shopOptions = document.querySelectorAll('.shop-option');
+    shopOptions.forEach((opt, idx) => {
+        if (realLinks[idx]) opt.href = realLinks[idx];
+        
+        // 点击立即关闭弹窗，流畅跳转
+        opt.addEventListener('click', () => {
+            shopModal.classList.remove('active');
+            document.body.style.overflow = '';
         });
+    });
 
-        // 店铺弹窗
-        const shopModal = document.getElementById('shopModal');
-        const openShopBtn = document.getElementById('openShopBtn');
-        const closeShopBtn = document.getElementById('closeShopBtn');
+    // 微信二维码弹窗
+    const wechatModal = document.getElementById('wechatModal');
+    const openWechatBtn = document.getElementById('openWechatBtn');
+    const closeWechatBtn = document.getElementById('closeWechatBtn');
+    const wechatImg = document.getElementById('wechatQrImg');
+    wechatImg.src = "weixin.jpg";
 
-        const openShopModal = () => {
-            withLock(() => {
-                shopModal.classList.add('active');
-                modalVisible = true;
-                document.body.style.overflow = 'hidden';
-            });
-        };
+    const openWechat = () => {
+        wechatModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
 
-        const closeShopModal = () => {
-            withLock(() => {
-                shopModal.classList.remove('active');
-                modalVisible = false;
-                document.body.style.overflow = '';
-            });
-        };
+    const closeWechat = () => {
+        wechatModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
 
-        openShopBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openShopModal();
-        });
-        closeShopBtn.addEventListener('click', closeShopModal);
-        shopModal.addEventListener('click', (e) => {
-            if (e.target === shopModal) closeShopModal();
-        });
+    openWechatBtn.addEventListener('click', openWechat);
+    closeWechatBtn.addEventListener('click', closeWechat);
+    wechatModal.addEventListener('click', (e) => {
+        if (e.target === wechatModal) closeWechat();
+    });
 
-        // 店铺链接
-        const realLinks = [
-            'https://d.74tx.cn/nQYL',
-            'https://172.lot-ml.com/ProductEn/Index/65bea861799e3bbe',
-            'https://h5.gantanhao.com/?from=3%40C%40%40oGsFstqB%3BA%3FGs%3BBq%40%3F%3BF%40rG%3BqCrorA%40oE%3EoA3%40C%40%40',
-            'https://bsx.pianwen.com.cn/s/W0SleL7w',
-            'https://d.74tx.com/K3gV'
-        ];
-
-        const shopOptions = document.querySelectorAll('.shop-option');
-        shopOptions.forEach((opt, idx) => {
-            if (idx < realLinks.length) opt.href = realLinks[idx];
-            
-            opt.addEventListener('click', (e) => {
-                if (!modalVisible || isBusy) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-            });
-        });
-
-        // 微信二维码弹窗
-        const wechatModal = document.getElementById('wechatModal');
-        const openWechatBtn = document.getElementById('openWechatBtn');
-        const closeWechatBtn = document.getElementById('closeWechatBtn');
-        const wechatImg = document.getElementById('wechatQrImg');
-        const yourWechatQr = "weixin.jpg";
-        wechatImg.src = yourWechatQr;
-
-        const openWechat = () => {
-            withLock(() => {
-                wechatModal.classList.add('active');
-                modalVisible = true;
-                document.body.style.overflow = 'hidden';
-            });
-        };
-
-        const closeWechat = () => {
-            withLock(() => {
-                wechatModal.classList.remove('active');
-                modalVisible = false;
-                document.body.style.overflow = '';
-            });
-        };
-
-        openWechatBtn.addEventListener('click', openWechat);
-        closeWechatBtn.addEventListener('click', closeWechat);
-        wechatModal.addEventListener('click', (e) => {
-            if (e.target === wechatModal) closeWechat();
-        });
-
-        // 返回顶部
-        const backTop = document.getElementById('backTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) backTop.classList.add('show');
-            else backTop.classList.remove('show');
-        });
-        backTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    })();
+    // 返回顶部
+    const backTop = document.getElementById('backTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) backTop.classList.add('show');
+        else backTop.classList.remove('show');
+    });
+    backTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
 </script>
 </body>
 </html>
