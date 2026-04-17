@@ -1,10 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>龙创科技官网</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :focus, :active, :focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* 固定浅色主题 - 高级质感配色 */
+        :root {
+            --bg-gradient: radial-gradient(circle at 20% 30%, rgba(248, 245, 255, 0.9), #f3f1f8);
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-primary: #171c2a;
+            --text-secondary: #5a6275;
+            --text-muted: #6c757d;
+            --border-color: rgba(0, 0, 0, 0.05);
+            --btn-primary-bg-start: #2d3a5e;
+            --btn-primary-bg-end: #1e293b;
+            --btn-primary-hover-start: #5b3cc4;
+            --btn-primary-hover-end: #4a2d8f;
+            --btn-secondary-bg: rgba(30, 41, 59, 0.06);
+            --btn-secondary-border: rgba(0, 0, 0, 0.12);
+            --btn-secondary-hover-bg: rgba(91, 60, 196, 0.12);
+            --modal-bg: rgba(255, 255, 255, 0.97);
+            --shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.3);
+            --glow-color: rgba(91, 60, 196, 0.2);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 32px 0 24px;
+            border-bottom: 1px solid var(--border-color);
+            animation: navFade 0.5s ease;
+        }
+        @keyframes navFade {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #2c3e66, #7c5cbf);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo-icon-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-icon {
+            font-size: 32px;
+            background: none;
+            color: #5b3cc4;
+            transition: transform 0.3s ease;
+            animation: softPulse 2s infinite ease-in-out;
+        }
+        .logo-icon-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--glow-color);
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+            transition: transform 0.4s, opacity 0.4s;
+        }
+        .logo-icon-wrapper:hover::before {
+            transform: translate(-50%, -50%) scale(1.4);
+            opacity: 0.6;
+        }
+        @keyframes softPulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 6px rgba(91,60,196,0.5)); }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        /* Hero 区域 */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            animation: fadeUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(92, 60, 196, 0.12);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5b3cc4;
+            margin-bottom: 28px;
+            backdrop-filter: blur(4px);
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .hero .highlight {
+            background: linear-gradient(135deg, #2c3e66, #7c5cbf);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero .subhead {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 32px;
+            line-height: 1.5;
+        }
+
+        /* 高级质感按钮组 */
+        .action-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            margin: 20px 0 60px;
+        }
+        /* 主按钮（流量店铺）- 细腻渐变 + 微光扫过 */
+        .primary-btn {
+            position: relative;
+            border: none;
+            padding: 16px 44px;
+            border-radius: 80px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--btn-primary-bg-start), var(--btn-primary-bg-end));
+            color: white;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .primary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+        .primary-btn:hover::before {
+            left: 100%;
+        }
+        .primary-btn:hover {
+            background: linear-gradient(135deg, var(--btn-primary-hover-start), var(--btn-primary-hover-end));
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px -12px rgba(91, 60, 196, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        /* 副按钮（联系方式）- 玻璃质感，高级边框 */
+        .contact-btn {
+            position: relative;
+            border: none;
+            padding: 16px 44px;
+            border-radius: 80px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--btn-secondary-bg);
+            backdrop-filter: blur(12px);
+            color: var(--text-primary);
+            border: 1px solid var(--btn-secondary-border);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .contact-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 80px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .contact-btn:hover::after {
+            opacity: 1;
+        }
+        .contact-btn:hover {
+            background: var(--btn-secondary-hover-bg);
+            backdrop-filter: blur(16px);
+            border-color: transparent;
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px -12px rgba(91, 60, 196, 0.25);
+            color: var(--text-primary);
+        }
+
+        /* 服务卡片 */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            margin: 40px 0 80px;
+        }
+        .feat-card {
+            flex: 1;
+            min-width: 240px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardReveal 0.5s ease forwards;
+            transition: all 0.3s ease;
+        }
+        .feat-card:nth-child(1) { animation-delay: 0.05s; }
+        .feat-card:nth-child(2) { animation-delay: 0.1s; }
+        .feat-card:nth-child(3) { animation-delay: 0.15s; }
+        @keyframes cardReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .feat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(91, 60, 196, 0.4);
+            box-shadow: 0 24px 32px -16px rgba(0, 0, 0, 0.12);
+        }
+        .feat-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .feat-card:hover .feat-icon {
+            transform: scale(1.04);
+        }
+        .feat-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .feat-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        /* ========== 弹窗优雅过渡动画（性能优化） ========== */
+        .welcome-modal-overlay,
+        .shop-modal-overlay,
+        .wechat-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0);
+            backdrop-filter: blur(0px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            transition: visibility 0.4s, background 0.4s ease, backdrop-filter 0.4s ease;
+        }
+        .welcome-modal-overlay.active,
+        .shop-modal-overlay.active,
+        .wechat-modal-overlay.active {
+            visibility: visible;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        .welcome-modal,
+        .shop-modal-container,
+        .wechat-modal {
+            background: var(--modal-bg);
+            border-radius: 52px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transform: scale(0.92);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.4s ease;
+            width: auto;
+            max-width: 90%;
+            will-change: transform, opacity;
+        }
+        .active .welcome-modal,
+        .active .shop-modal-container,
+        .active .wechat-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .welcome-modal {
+            max-width: 460px;
+            padding: 44px 36px;
+        }
+        .shop-modal-container {
+            max-width: 520px;
+            padding: 40px 32px;
+        }
+        .wechat-modal {
+            max-width: 420px;
+            padding: 40px 32px 44px;
+        }
+        .welcome-modal h3,
+        .shop-modal-container h3,
+        .wechat-modal h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .welcome-modal .welcome-message,
+        .shop-modal-container p,
+        .wechat-modal p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        .shop-options {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+        .shop-option {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 80px;
+            padding: 16px 24px;
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .shop-option .arrow {
+            opacity: 0.5;
+            transition: transform 0.2s;
+        }
+        .shop-option:hover {
+            background: #5b3cc4;
+            color: white;
+            transform: translateX(6px);
+        }
+        .close-shop-modal, .close-wechat-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        .close-shop-modal:hover, .close-wechat-btn:hover {
+            background: #5b3cc4;
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+        .welcome-btn {
+            background: linear-gradient(135deg, var(--btn-primary-bg-start), var(--btn-primary-bg-end));
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .welcome-btn:hover {
+            background: linear-gradient(135deg, var(--btn-primary-hover-start), var(--btn-primary-hover-end));
+            transform: translateY(-2px);
+        }
+        .qrcode-img {
+            width: 200px;
+            height: 200px;
+            margin: 10px auto 20px;
+            background: #f3f4f6;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.1);
+        }
+        .qrcode-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 返回顶部 */
+        .back-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 30px;
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.2s ease;
+            z-index: 99;
+            font-size: 22px;
+            pointer-events: none;
+            color: var(--text-primary);
+        }
+        .back-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-top:hover {
+            background: #5b3cc4;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
+            .hero h1 { font-size: 38px; }
+            .primary-btn, .contact-btn { padding: 12px 28px; font-size: 16px; }
+            .feat-card { min-width: 100%; }
+            .welcome-modal, .shop-modal-container, .wechat-modal { padding: 32px 24px; }
+            .qrcode-img { width: 160px; height: 160px; }
+            .logo { font-size: 24px; }
+            .logo-icon { font-size: 28px; }
+             .logo-main { font-size: 18px; }
+    .logo-sub { font-size: 9px; }
+    .logo-icon { width: 28px; height: 28px; }
+        }
+/* 导航栏 Logo 区域 - 汉字上，英文下 */
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+.logo-main {
+    font-size: 20px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #2c3e66, #7c5cbf);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.logo-sub {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-muted, #6c757d);
+    letter-spacing: 0.3px;
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="navbar">
+    <div class="logo">
+        <img src="logo.png" class="logo-icon" alt="logo" style="width: 32px; height: 32px;">
+        <div class="logo-text">
+            <div class="logo-main">龙创科技</div>
+            <div class="logo-sub">Loonginno Technology</div>
+        </div>
+    </div>
+</div>
+
+    <div class="hero">
+        <div class="hero-badge">✦ 数字通信引领者</div>
+        <h1>极速连接 · <span class="highlight">智简未来</span></h1>
+        <div class="subhead">为企业与个人提供高性价比通信方案，5G专网、聚合流量，技术驱动效率。</div>
+    </div>
+
+    <div class="action-group">
+        <button class="primary-btn" id="openShopBtn">
+            <span>🏪</span> 流量店铺 · 精选套餐
+        </button>
+        <button class="contact-btn" id="openWechatBtn">
+            <span>💬</span> 联系我 · 微信咨询
+        </button>
+    </div>
+
+    <div class="features">
+        <div class="feat-card">
+            <div class="feat-icon">⚡</div>
+            <h3>极速选卡</h3>
+            <p>官方授权，即开即用，分钟级发货</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon">🛡️</div>
+            <h3>企业专网</h3>
+            <p>安全稳定定制化，5G专属通道</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon">🎯</div>
+            <h3>1v1咨询</h3>
+            <p>专业顾问全程服务，售后无忧</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>© 2026 龙创科技 · All Rights Reserved.</div>
+    </div>
+</div>
+
+<!-- 欢迎弹窗 -->
+<div class="welcome-modal-overlay" id="welcomeModal">
+    <div class="welcome-modal">
+        <h3>欢迎光临</h3>
+        <div class="welcome-message" id="customWelcomeMessage">
+            龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，或联系我获取专属方案。
+        </div>
+        <button class="welcome-btn" id="closeWelcomeBtn">开始探索 →</button>
+    </div>
+</div>
+
+<!-- 五个店铺选项弹窗 -->
+<div class="shop-modal-overlay" id="shopModal">
+    <div class="shop-modal-container">
+        <h3>📱 流量店铺 · 热销推荐</h3>
+        <p>点击下方选项，直达官方授权套餐</p>
+        <div class="shop-options">
+            <a href="#" class="shop-option" data-default="https://link1.card"><span>✈️ 1号店铺</span><span class="arrow">→</span></a>
+            <a href="#" class="shop-option" data-default="https://link2.card"><span>✈️ 2号店铺</span><span class="arrow">→</span></a>
+            <a href="#" class="shop-option" data-default="https://link3.card"><span>✈️ 3号店铺</span><span class="arrow">→</span></a>
+            <a href="#" class="shop-option" data-default="https://link4.card"><span>✈️ 省内极速上门店铺</span><span class="arrow">→</span></a>
+            <a href="#" class="shop-option" data-default="https://link5.card"><span>🌎 全国发货产品店铺[有卡费]</span><span class="arrow">→</span></a>
+        </div>
+        <button class="close-shop-modal" id="closeShopBtn">关闭</button>
+    </div>
+</div>
+
+<!-- 微信二维码弹窗 -->
+<div class="wechat-modal-overlay" id="wechatModal">
+    <div class="wechat-modal">
+        <h3>📱 扫码联系我</h3>
+        <p>添加微信，获取一对一咨询<br>微信号:kdghaoka</p>
+        <div class="qrcode-img">
+            <img id="wechatQrImg" src="weixin.jpg" alt="微信二维码">
+        </div>
+        <button class="close-wechat-btn" id="closeWechatBtn">关闭</button>
+    </div>
+</div>
+
+<div class="back-top" id="backTopBtn">↑</div>
+
 <script>
     (function() {
-        // 全局互斥锁 + 弹窗状态管理
         let isBusy = false;
-        let modalActive = false; // 专门标记弹窗是否真正显示
+        let modalVisible = false;
 
-        // 上锁 / 解锁
         function lock() { isBusy = true; }
         function unlock() { isBusy = false; }
         function withLock(callback) {
@@ -15,9 +648,7 @@
             return true;
         }
 
-        // ======================================
         // 欢迎弹窗
-        // ======================================
         const welcomeModal = document.getElementById('welcomeModal');
         const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
         const customMsg = document.getElementById('customWelcomeMessage');
@@ -30,7 +661,7 @@
             if (welcomeModal) {
                 withLock(() => {
                     welcomeModal.classList.add('active');
-                    modalActive = true; // 弹窗显示
+                    modalVisible = true;
                     document.body.style.overflow = 'hidden';
                 });
             }
@@ -39,7 +670,7 @@
         const closeWelcome = () => {
             withLock(() => {
                 welcomeModal.classList.remove('active');
-                modalActive = false; // 弹窗关闭
+                modalVisible = false;
                 document.body.style.overflow = '';
             });
         };
@@ -49,9 +680,7 @@
             if (e.target === welcomeModal) closeWelcome();
         });
 
-        // ======================================
         // 店铺弹窗
-        // ======================================
         const shopModal = document.getElementById('shopModal');
         const openShopBtn = document.getElementById('openShopBtn');
         const closeShopBtn = document.getElementById('closeShopBtn');
@@ -59,7 +688,7 @@
         const openShopModal = () => {
             withLock(() => {
                 shopModal.classList.add('active');
-                modalActive = true;
+                modalVisible = true;
                 document.body.style.overflow = 'hidden';
             });
         };
@@ -67,7 +696,7 @@
         const closeShopModal = () => {
             withLock(() => {
                 shopModal.classList.remove('active');
-                modalActive = false;
+                modalVisible = false;
                 document.body.style.overflow = '';
             });
         };
@@ -76,15 +705,12 @@
             e.preventDefault();
             openShopModal();
         });
-
         closeShopBtn.addEventListener('click', closeShopModal);
         shopModal.addEventListener('click', (e) => {
             if (e.target === shopModal) closeShopModal();
         });
 
-        // ======================================
-        // 店铺链接（修复：只有弹窗显示时才能点击）
-        // ======================================
+        // 店铺链接
         const realLinks = [
             'https://d.74tx.cn/nQYL',
             'https://172.lot-ml.com/ProductEn/Index/65bea861799e3bbe',
@@ -95,23 +721,17 @@
 
         const shopOptions = document.querySelectorAll('.shop-option');
         shopOptions.forEach((opt, idx) => {
-            // 设置链接
-            if (idx < realLinks.length && realLinks[idx]) {
-                opt.href = realLinks[idx];
-            }
-
-            // ✅ 核心修复：弹窗没打开 → 直接禁止点击
+            if (idx < realLinks.length) opt.href = realLinks[idx];
+            
             opt.addEventListener('click', (e) => {
-                if (!modalActive || isBusy) {
+                if (!modalVisible || isBusy) {
                     e.preventDefault();
                     e.stopPropagation();
                 }
             });
         });
 
-        // ======================================
         // 微信二维码弹窗
-        // ======================================
         const wechatModal = document.getElementById('wechatModal');
         const openWechatBtn = document.getElementById('openWechatBtn');
         const closeWechatBtn = document.getElementById('closeWechatBtn');
@@ -122,7 +742,7 @@
         const openWechat = () => {
             withLock(() => {
                 wechatModal.classList.add('active');
-                modalActive = true;
+                modalVisible = true;
                 document.body.style.overflow = 'hidden';
             });
         };
@@ -130,7 +750,7 @@
         const closeWechat = () => {
             withLock(() => {
                 wechatModal.classList.remove('active');
-                modalActive = false;
+                modalVisible = false;
                 document.body.style.overflow = '';
             });
         };
@@ -141,9 +761,7 @@
             if (e.target === wechatModal) closeWechat();
         });
 
-        // ======================================
         // 返回顶部
-        // ======================================
         const backTop = document.getElementById('backTopBtn');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 400) backTop.classList.add('show');
@@ -154,3 +772,5 @@
         });
     })();
 </script>
+</body>
+</html>
