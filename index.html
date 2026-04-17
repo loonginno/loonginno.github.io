@@ -510,9 +510,12 @@
             background: var(--btn-primary-hover-start);
             transform: translateY(-2px);
         }
+
+        /* 自动适配图片原始长宽比例 */
         .qrcode-img {
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            max-width: 260px;
+            height: auto;
             margin: 10px auto 20px;
             background: #f3f4f6;
             border-radius: 36px;
@@ -521,8 +524,8 @@
         }
         .qrcode-img img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
         }
 
         /* 返回顶部 */
@@ -565,7 +568,7 @@
             .primary-btn, .contact-btn { padding: 12px 28px; font-size: 16px; }
             .feat-card { min-width: 100%; }
             .welcome-modal, .shop-modal-container, .wechat-modal { padding: 32px 24px; }
-            .qrcode-img { width: 160px; height: 160px; }
+            .qrcode-img { max-width: 220px; }
             .logo { font-size: 24px; }
             .logo-icon { width: 28px; height: 28px; }
             .logo-main { font-size: 18px; }
@@ -678,7 +681,7 @@
 <div class="wechat-modal-overlay" id="wechatModal">
     <div class="wechat-modal">
         <h3>📱 扫码联系我</h3>
-        <p>添加微信，获取一对一咨询<br>微信号:kdghaoka</p>
+        <p>添加微信，获取一对一咨询<br>微信号:kdghaoka<br>公众号:星联消息助手</p>
         <div class="qrcode-img">
             <img id="wechatQrImg" src="weixin.jpg" alt="微信二维码">
         </div>
@@ -722,7 +725,7 @@
     const customMsg = document.getElementById('customWelcomeMessage');
 
     if (customMsg) {
-        customMsg.innerHTML = `龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺<br>下单后务必联系我报单，<br>全国产品店铺务必先支付费用再下单，<br>请勿私自下单`;
+        customMsg.innerHTML = `龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺下单后<br>务必联系我报单，<br>全国产品店铺务必先支付费用再下单，<br>请勿私自下单`;
     }
 
     setTimeout(() => {
