@@ -362,7 +362,7 @@
             margin-top: 20px;
         }
 
-        /* ========== 弹窗优雅过渡动画（手机优化版） ========== */
+        /* ========== 弹窗（手机防点透） ========== */
         .welcome-modal-overlay,
         .shop-modal-overlay,
         .wechat-modal-overlay {
@@ -378,15 +378,18 @@
             z-index: 2000;
             visibility: hidden;
             transition: visibility 0.4s, background 0.4s ease;
+            /* 防点透关键：事件阻断 */
+            pointer-events: none;
         }
         .welcome-modal-overlay.active,
         .shop-modal-overlay.active,
         .wechat-modal-overlay.active {
             visibility: visible;
             background: rgba(0, 0, 0, 0.5);
+            pointer-events: auto;
         }
 
-        /* 仅手机禁用 blur，电脑保留 */
+        /* 仅电脑保留 blur */
         @media (min-width: 768px) {
             .welcome-modal-overlay.active,
             .shop-modal-overlay.active,
@@ -504,7 +507,7 @@
             transition: all 0.2s ease;
         }
         .welcome-btn:hover {
-            background: linear-gradient(135deg, var(--btn-primary-hover-start), var(--btn-primary-hover-end));
+            background: var(--btn-primary-hover-start);
             transform: translateY(-2px);
         }
         .qrcode-img {
@@ -691,14 +694,12 @@
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
 
-    // 读取本地保存的主题
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         html.setAttribute('data-theme', savedTheme);
         themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
     }
 
-    // 切换主题
     themeToggle.addEventListener('click', () => {
         const current = html.getAttribute('data-theme');
         if (current === 'dark') {
@@ -712,14 +713,16 @@
         }
     });
 
-    // ============== 原有功能 ==============
+    // ============== 防点透：延迟关闭 + 事件阻断 ==============
+    let isClosing = false; // 防并发
+
     // 欢迎弹窗
     const welcomeModal = document.getElementById('welcomeModal');
     const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
     const customMsg = document.getElementById('customWelcomeMessage');
 
     if (customMsg) {
-        customMsg.innerHTML = `龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺下单后务必联系我报单，<br>全国产品店铺务必先支付费用再下单，请勿私自下单`;
+        customMsg.innerHTML = `龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺<br>下单后务必联系我报单，<br>全国产品店铺务必先支付费用再下单，<br>请勿私自下单`;
     }
 
     setTimeout(() => {
@@ -730,8 +733,11 @@
     }, 200);
 
     const closeWelcome = () => {
+        if (isClosing) return;
+        isClosing = true;
         welcomeModal.classList.remove('active');
         document.body.style.overflow = '';
+        setTimeout(() => { isClosing = false; }, 350); // 和动画时长一致
     };
 
     closeWelcomeBtn.addEventListener('click', closeWelcome);
@@ -739,19 +745,23 @@
         if (e.target === welcomeModal) closeWelcome();
     });
 
-    // 店铺弹窗
+    // 店铺弹窗（核心修复）
     const shopModal = document.getElementById('shopModal');
     const openShopBtn = document.getElementById('openShopBtn');
     const closeShopBtn = document.getElementById('closeShopBtn');
 
     const openShopModal = () => {
+        if (isClosing) return;
         shopModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
 
     const closeShopModal = () => {
+        if (isClosing) return;
+        isClosing = true;
         shopModal.classList.remove('active');
         document.body.style.overflow = '';
+        setTimeout(() => { isClosing = false; }, 350);
     };
 
     openShopBtn.addEventListener('click', openShopModal);
@@ -772,9 +782,13 @@
     const shopOptions = document.querySelectorAll('.shop-option');
     shopOptions.forEach((opt, idx) => {
         if (realLinks[idx]) opt.href = realLinks[idx];
-        opt.addEventListener('click', () => {
-            shopModal.classList.remove('active');
-            document.body.style.overflow = '';
+        // 点击链接时：先关弹窗，再跳转，阻止穿透
+        opt.addEventListener('click', (e) => {
+            e.stopPropagation(); // 阻止冒泡
+            if (!isClosing) {
+                shopModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     });
 
@@ -786,13 +800,17 @@
     wechatImg.src = "weixin.jpg";
 
     const openWechat = () => {
+        if (isClosing) return;
         wechatModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
 
     const closeWechat = () => {
+        if (isClosing) return;
+        isClosing = true;
         wechatModal.classList.remove('active');
         document.body.style.overflow = '';
+        setTimeout(() => { isClosing = false; }, 350);
     };
 
     openWechatBtn.addEventListener('click', openWechat);
