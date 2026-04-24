@@ -361,6 +361,21 @@
             font-size: 13px;
             margin-top: 20px;
         }
+        /* 加盟合作入口 优化：明显但不刺眼 */
+        .join-link {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.25s ease;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .join-link:hover {
+            background: var(--btn-secondary-hover-bg);
+            color: #5b3cc4;
+        }
 
         /* ========== 弹窗（手机防点透） ========== */
         .welcome-modal-overlay,
@@ -647,6 +662,8 @@
 
     <div class="footer">
         <div>© 2026 龙创科技 · All Rights Reserved.</div>
+        <!-- 优化后 适中明显度 加盟合作入口，可直接绑定外链 -->
+        <a href="https://haoka.lot-ml.com/plugreg.html?agentid=1744163" target="_blank" class="join-link">商务渠道 · 全网招商加盟</a>
     </div>
 </div>
 
