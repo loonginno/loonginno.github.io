@@ -427,7 +427,7 @@
             padding: 40px 32px;
         }
         .wechat-modal {
-            max-width: 420px;
+            max-width: 460px;
             padding: 40px 32px 44px;
         }
         .welcome-modal h3,
@@ -444,7 +444,39 @@
             font-size: 16px;
             line-height: 1.6;
             color: var(--text-secondary);
-            margin-bottom: 32px;
+            margin-bottom: 20px;
+        }
+        /* 双二维码容器样式 */
+        .two-qrcode-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 10px auto 24px;
+        }
+        .qrcode-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .qrcode-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .qrcode-img {
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            background: #f3f4f6;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.1);
+        }
+        .qrcode-img img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         .shop-options {
             display: flex;
@@ -510,21 +542,6 @@
             background: #5b3cc4;
             transform: translateY(-2px);
         }
-        .qrcode-img {
-            width: 100%;
-            max-width: 260px;
-            height: auto;
-            margin: 10px auto 20px;
-            background: #f3f4f6;
-            border-radius: 36px;
-            overflow: hidden;
-            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.1);
-        }
-        .qrcode-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
         .back-top {
             position: fixed;
             bottom: 28px;
@@ -572,7 +589,6 @@
             .unified-btn { font-size: 16px; gap: 8px; }
             .feat-card { min-width: 100%; }
             .welcome-modal, .shop-modal-container, .wechat-modal { padding: 32px 24px; }
-            .qrcode-img { max-width: 220px; }
             .logo { font-size: 24px; }
             .theme-toggle { width: 40px; height: 40px; font-size: 16px; }
         }
@@ -684,13 +700,25 @@
     </div>
 </div>
 
-<!-- 微信二维码弹窗 -->
+<!-- 微信二维码弹窗（已改为双二维码） -->
 <div class="wechat-modal-overlay" id="wechatModal">
     <div class="wechat-modal">
         <h3>📱 扫码联系我</h3>
         <p>添加微信，获取一对一咨询<br>公众号:星联消息助手</p>
-        <div class="qrcode-img">
-            <img id="wechatQrImg" src="weixin.jpg" alt="微信二维码">
+        <!-- 双二维码区域：办卡联系 / 商务合作 -->
+        <div class="two-qrcode-wrap">
+            <div class="qrcode-item">
+                <div class="qrcode-label">流量卡办理咨询</div>
+                <div class="qrcode-img">
+                    <img src="weixin.jpg" alt="流量卡办理咨询微信">
+                </div>
+            </div>
+            <div class="qrcode-item">
+                <div class="qrcode-label">商务合作咨询</div>
+                <div class="qrcode-img">
+                    <img src="weixin2.jpg" alt="商务合作咨询微信">
+                </div>
+            </div>
         </div>
         <button class="close-wechat-btn" id="closeWechatBtn">关闭</button>
     </div>
@@ -790,8 +818,6 @@
     const wechatModal = document.getElementById('wechatModal');
     const openWechatBtn = document.getElementById('openWechatBtn');
     const closeWechatBtn = document.getElementById('closeWechatBtn');
-    const wechatImg = document.getElementById('wechatQrImg');
-    wechatImg.src = "weixin.jpg";
 
     const openWechat = () => {
         if (isClosing) return;
