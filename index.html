@@ -366,7 +366,7 @@
             margin-top: 20px;
         }
 
-        /* 弹窗样式不变 */
+        /* 弹窗基础 修复层级&点击穿透 */
         .welcome-modal-overlay,
         .shop-modal-overlay,
         .wechat-modal-overlay {
@@ -411,6 +411,10 @@
             width: auto;
             max-width: 90%;
             will-change: transform, opacity;
+            /* 修复溢出显示不全 */
+            max-height: 85vh;
+            overflow-y: auto;
+            pointer-events: auto !important;
         }
         .active .welcome-modal,
         .active .shop-modal-container,
@@ -426,16 +430,17 @@
             max-width: 520px;
             padding: 40px 32px;
         }
+        /* 微信弹窗优化 不挤压、可正常关闭 */
         .wechat-modal {
-            max-width: 460px;
-            padding: 40px 32px 44px;
+            max-width: 400px;
+            padding: 36px 28px;
         }
         .welcome-modal h3,
         .shop-modal-container h3,
         .wechat-modal h3 {
             font-size: 28px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             color: var(--text-primary);
         }
         .welcome-modal .welcome-message,
@@ -444,30 +449,27 @@
             font-size: 16px;
             line-height: 1.6;
             color: var(--text-secondary);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
-        /* 双二维码容器样式 */
-        .two-qrcode-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin: 10px auto 24px;
+        /* 双二维码垂直紧凑布局 无遮挡bug */
+        .qr-double-box{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            margin:0 auto 24px;
         }
-        .qrcode-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        .qr-single{
+            text-align:center;
         }
-        .qrcode-label {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+        .qr-tip{
+            font-size:13px;
+            color:var(--text-muted);
+            margin-bottom:6px;
         }
         .qrcode-img {
-            width: 100%;
-            max-width: 220px;
+            width: 180px;
             height: auto;
+            margin: 0 auto;
             background: #f3f4f6;
             border-radius: 36px;
             overflow: hidden;
@@ -520,6 +522,9 @@
             transition: all 0.2s ease;
             margin-top: 8px;
             display: inline-block;
+            /* 强制最高可点击层级 */
+            position:relative;
+            z-index:10;
         }
         .close-shop-modal:hover, .close-wechat-btn:hover {
             background: #5b3cc4;
@@ -575,7 +580,7 @@
             transform: translateY(-3px);
         }
 
-        /* 手机端：仅修改——三个按钮100%等长统一，布局竖排，其余原样不动 */
+        /* 手机端适配 杜绝显示不全 */
         @media (max-width: 720px) {
             .btn-wrap-all, .row-two {
                 flex-direction: column;
@@ -588,9 +593,9 @@
             .hero h1 { font-size: 38px; }
             .unified-btn { font-size: 16px; gap: 8px; }
             .feat-card { min-width: 100%; }
-            .welcome-modal, .shop-modal-container, .wechat-modal { padding: 32px 24px; }
             .logo { font-size: 24px; }
             .theme-toggle { width: 40px; height: 40px; font-size: 16px; }
+            .qrcode-img{width:160px;}
         }
         .logo-text {
             display: flex;
@@ -700,26 +705,27 @@
     </div>
 </div>
 
-<!-- 微信二维码弹窗（已改为双二维码） -->
+<!-- 微信双二维码弹窗 修复所有阻塞bug + 适配你图片名 -->
 <div class="wechat-modal-overlay" id="wechatModal">
     <div class="wechat-modal">
         <h3>📱 扫码联系我</h3>
         <p>添加微信，获取一对一咨询<br>公众号:星联消息助手</p>
-        <!-- 双二维码区域：办卡联系 / 商务合作 -->
-        <div class="two-qrcode-wrap">
-            <div class="qrcode-item">
-                <div class="qrcode-label">流量卡办理咨询</div>
+        
+        <div class="qr-double-box">
+            <div class="qr-single">
+                <div class="qr-tip">办卡个人专属咨询</div>
                 <div class="qrcode-img">
-                    <img src="weixin.jpg" alt="流量卡办理咨询微信">
+                    <img src="weixin.jpg" alt="办卡微信">
                 </div>
             </div>
-            <div class="qrcode-item">
-                <div class="qrcode-label">商务合作咨询</div>
+            <div class="qr-single">
+                <div class="qr-tip">全网商务招商合作</div>
                 <div class="qrcode-img">
-                    <img src="weixin2.jpg" alt="商务合作咨询微信">
+                    <img src="weixin2.jpg" alt="合作微信">
                 </div>
             </div>
         </div>
+
         <button class="close-wechat-btn" id="closeWechatBtn">关闭</button>
     </div>
 </div>
