@@ -349,7 +349,7 @@
             margin-top: 20px;
         }
 
-        /* 弹窗基础（宽度不变，保持原窄弹窗） */
+        /* 弹窗基础 */
         .welcome-modal-overlay,
         .shop-modal-overlay,
         .wechat-modal-overlay {
@@ -391,14 +391,12 @@
             transform: scale(0.92);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.4s ease;
-            width: auto;
             max-width: 90%;
             will-change: transform, opacity;
             max-height: 85vh;
             overflow-y: auto;
             pointer-events: auto !important;
         }
-        /* 微信弹窗：保持原窄宽度，横排二维码 */
         .wechat-modal {
             background: var(--modal-bg);
             border-radius: 52px;
@@ -407,11 +405,10 @@
             transform: scale(0.92);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.4s ease;
-            width: auto;
             max-width: 90%;
             will-change: transform, opacity;
             max-height: 85vh;
-            overflow-y: auto; /* 内容过多可滑动 */
+            overflow-y: auto;
             pointer-events: auto !important;
             padding: 36px 28px;
         }
@@ -431,7 +428,6 @@
             max-width: 520px;
             padding: 40px 32px;
         }
-        /* 微信弹窗固定原窄宽度，不加宽 */
         .wechat-modal {
             max-width: 400px;
         }
@@ -453,11 +449,10 @@
             margin-bottom: 18px;
         }
 
-        /* 核心：二维码横排，等宽，间距小，不撑宽弹窗 */
         .qr-row {
             display: flex;
             justify-content: center;
-            gap: 16px; /* 两个二维码之间间距 */
+            gap: 16px;
             margin: 0 auto 24px;
         }
         .qr-col {
@@ -470,7 +465,7 @@
             margin-bottom: 6px;
         }
         .qrcode-img {
-            width: 140px; /* 缩小二维码，适配窄弹窗 */
+            width: 140px;
             height: auto;
             margin: 0 auto;
             background: #f3f4f6;
@@ -599,7 +594,6 @@
             .feat-card { min-width: 100%; }
             .logo { font-size: 24px; }
             .theme-toggle { width: 40px; height: 40px; font-size: 16px; }
-            /* 手机端二维码自适应缩小 */
             .qrcode-img{width:120px;}
             .qr-row{gap:10px;}
         }
@@ -678,8 +672,9 @@
         </div>
     </div>
 
+    <!-- 已修改智能自动版权年份 -->
     <div class="footer">
-        <div>© 2026 龙创科技 · All Rights Reserved.</div>
+        <div>© <script>const startYear=2026,nowYear=new Date().getFullYear();document.write(startYear===nowYear?startYear:startYear+"-"+nowYear);</script> 龙创科技 · All Rights Reserved.</div>
     </div>
 </div>
 
@@ -710,13 +705,11 @@
     </div>
 </div>
 
-<!-- 微信弹窗：横排双二维码，窄弹窗，可滑动 -->
+<!-- 微信弹窗 -->
 <div class="wechat-modal-overlay" id="wechatModal">
     <div class="wechat-modal">
         <h3>📱 扫码联系我</h3>
         <p>添加微信，获取一对一咨询<br>公众号:星联消息助手</p>
-
-        <!-- 横排两个二维码 -->
         <div class="qr-row">
             <div class="qr-col">
                 <div class="qr-tip">办卡咨询</div>
@@ -731,7 +724,6 @@
                 </div>
             </div>
         </div>
-
         <button class="close-wechat-btn" id="closeWechatBtn">关闭</button>
     </div>
 </div>
