@@ -184,11 +184,13 @@
         <p style="font-size:14px;color:var(--text-2)">添加备注：平台注册合作</p>
     </div>
 
+    <!-- 智能自动版权年份 -->
     <div class="footer">
-        © 2026 龙创科技 · All Rights Reserved.
+        © <script>const startYear=2026,nowYear=new Date().getFullYear();document.write(startYear===nowYear?startYear:startYear+"-"+nowYear);</script> 龙创科技 · All Rights Reserved.
     </div>
 </div>
 <script>
+// 暗黑模式读取保留原样
 let t=localStorage.getItem("theme");
 if(t==="dark")document.documentElement.setAttribute("data-theme","dark");
 </script>
