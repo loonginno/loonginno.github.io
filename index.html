@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
     <title>龙创科技</title>
     <link rel="shortcut icon" href="/favicon.ico">
     <style>
@@ -22,60 +22,71 @@
         html, body {
             width: 100%;
             overflow-x: hidden;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Inter', 'Microsoft YaHei', sans-serif;
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -webkit-overflow-scrolling: touch;
         }
 
         :root {
-            --bg-gradient: radial-gradient(circle at 20% 30%, rgba(248, 245, 255, 0.9), #f3f1f8);
-            --bg-card: rgba(255, 255, 255, 0.7);
-            --card-border: rgba(255, 255, 255, 0.6);
-            --text-primary: #171c2a;
-            --text-secondary: #5a6275;
-            --text-muted: #6c757d;
-            --border-color: rgba(0, 0, 0, 0.05);
-            --modal-bg: rgba(255, 255, 255, 0.97);
-            --shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.3);
-            --glow-color: rgba(91, 60, 196, 0.2);
+            --bg-gradient: radial-gradient(circle at 20% 30%, rgba(248, 246, 254, 0.94), #f3f1f8);
+            --bg-card: rgba(255, 255, 255, 0.62);
+            --card-border: rgba(255, 255, 255, 0.75);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-muted: #86868b;
+            --main-color: #5856d6;
+            --main-light: rgba(88, 86, 214, 0.12);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --modal-bg: rgba(255, 255, 255, 0.95);
+            --shadow-sm: 0 3px 12px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 24px -10px rgba(0, 0, 0, 0.08);
+            --shadow-btn: 0 4px 16px -6px rgba(88, 86, 214, 0.14);
+            --radius-full: 9999px;
+            --radius-lg: 32px;
+            --radius-md: 24px;
+            --radius-sm: 16px;
             --btn-width: 280px;
             --btn-height: 52px;
-            --btn1-light-bg: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(240,242,255,0.7));
-            --btn1-light-border: rgba(108, 99, 255, 0.3);
-            --btn1-light-hover: linear-gradient(135deg, rgba(240,242,255,0.8), rgba(230,235,255,0.9));
-            --btn2-light-bg: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(235,245,255,0.7));
-            --btn2-light-border: rgba(79, 195, 247, 0.35);
-            --btn2-light-hover: linear-gradient(135deg, rgba(235,245,255,0.8), rgba(225,240,255,0.9));
-            --btn3-light-bg: linear-gradient(135deg, rgba(255,255,255,0.6), rgba(245,240,255,0.7));
-            --btn3-light-border: rgba(149, 117, 205, 0.35);
-            --btn3-light-hover: linear-gradient(135deg, rgba(245,240,255,0.85), rgba(235,225,250,0.9));
+            --btn1-light-bg: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(242,243,252,0.65));
+            --btn1-light-border: rgba(88, 86, 214, 0.22);
+            --btn1-light-hover: linear-gradient(135deg, rgba(245,246,254,0.72), rgba(235,237,250,0.82));
+            --btn2-light-bg: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(238,246,255,0.65));
+            --btn2-light-border: rgba(0, 122, 255, 0.24);
+            --btn2-light-hover: linear-gradient(135deg, rgba(240,248,255,0.72), rgba(230,240,252,0.82));
+            --btn3-light-bg: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(248,243,255,0.65));
+            --btn3-light-border: rgba(175, 82, 222, 0.22);
+            --btn3-light-hover: linear-gradient(135deg, rgba(248,243,255,0.72), rgba(240,232,250,0.82));
         }
 
         [data-theme="dark"] {
-            --bg-gradient: radial-gradient(circle at 20% 30%, #1e1e2f, #121218);
-            --bg-card: rgba(40, 40, 60, 0.7);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #f0f0f5;
-            --text-secondary: #b0b0c8;
-            --text-muted: #8888a0;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --modal-bg: rgba(30, 30, 45, 0.97);
-            --shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.5);
-            --glow-color: rgba(107, 76, 212, 0.25);
-            --btn1-dark-bg: linear-gradient(135deg, rgba(50,50,80,0.6), rgba(60,55,100,0.7));
-            --btn1-dark-border: rgba(108, 99, 255, 0.45);
-            --btn1-dark-hover: linear-gradient(135deg, rgba(60,55,100,0.8), rgba(70,65,120,0.9));
-            --btn2-dark-bg: linear-gradient(135deg, rgba(45,55,85,0.6), rgba(50,70,110,0.7));
-            --btn2-dark-border: rgba(79, 195, 247, 0.45);
-            --btn2-dark-hover: linear-gradient(135deg, rgba(50,70,110,0.8), rgba(60,80,130,0.9));
-            --btn3-dark-bg: linear-gradient(135deg, rgba(55,48,88,0.6), rgba(65,58,105,0.7));
-            --btn3-dark-border: rgba(149, 117, 205, 0.45);
-            --btn3-dark-hover: linear-gradient(135deg, rgba(65,58,105,0.8), rgba(75,68,125,0.9));
+            --bg-gradient: radial-gradient(circle at 20% 30%, #232336, #181822);
+            --bg-card: rgba(44, 44, 62, 0.6);
+            --card-border: rgba(255, 255, 255, 0.09);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #82828c;
+            --border-color: rgba(255, 255, 255, 0.07);
+            --modal-bg: rgba(34, 34, 48, 0.95);
+            --shadow-sm: 0 3px 12px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 8px 24px -10px rgba(0, 0, 0, 0.35);
+            --shadow-btn: 0 4px 16px -6px rgba(88, 86, 214, 0.2);
+            --btn1-dark-bg: linear-gradient(135deg, rgba(52,52,78,0.55), rgba(62,58,96,0.65));
+            --btn1-dark-border: rgba(88, 86, 214, 0.32);
+            --btn1-dark-hover: linear-gradient(135deg, rgba(62,58,96,0.72), rgba(72,68,110,0.82));
+            --btn2-dark-bg: linear-gradient(135deg, rgba(46,54,74,0.55), rgba(54,68,96,0.65));
+            --btn2-dark-border: rgba(0, 122, 255, 0.32);
+            --btn2-dark-hover: linear-gradient(135deg, rgba(54,68,96,0.72), rgba(64,78,108,0.82));
+            --btn3-dark-bg: linear-gradient(135deg, rgba(54,48,78,0.55), rgba(64,56,92,0.65));
+            --btn3-dark-border: rgba(175, 82, 222, 0.32);
+            --btn3-dark-hover: linear-gradient(135deg, rgba(64,56,92,0.72), rgba(74,66,106,0.82));
         }
 
         body {
             background: var(--bg-gradient);
             color: var(--text-primary);
-            transition: background 0.4s ease, color 0.4s ease;
+            transition: background 0.36s ease, color 0.36s ease;
+            min-height: 100vh;
         }
 
         .container {
@@ -92,37 +103,47 @@
             align-items: center;
             padding: 32px 0 24px;
             border-bottom: 1px solid var(--border-color);
-            animation: navFade 0.5s ease;
+            animation: navFade 0.5s ease forwards;
         }
         @keyframes navFade {
             from { opacity: 0; transform: translateY(-12px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
         }
         .logo-icon {
-            font-size: 32px;
-            background: none;
-            color: #5b3cc4;
-            transition: transform 0.3s ease;
-            animation: softPulse 2s infinite ease-in-out;
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
         }
-        @keyframes softPulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 6px rgba(91,60,196,0.5); }
-            100% { transform: scale(1); opacity: 0.9; }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-main {
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #2c3e66, #7c5cbf);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo-sub {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
         }
 
         .theme-toggle {
             width: 44px;
             height: 44px;
-            border-radius: 50%;
+            border-radius: var(--radius-full);
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             display: flex;
@@ -130,18 +151,19 @@
             justify-content: center;
             font-size: 18px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.24s ease;
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .theme-toggle:hover {
-            transform: scale(1.08);
-            background: rgba(91, 60, 196, 0.12);
+            background: var(--main-light);
+            transform: scale(1.06);
         }
 
         .hero {
             text-align: center;
             padding: 60px 0 40px;
-            animation: fadeUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            animation: fadeUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(24px); }
@@ -149,14 +171,16 @@
         }
         .hero-badge {
             display: inline-block;
-            background: rgba(92, 60, 196, 0.12);
-            padding: 6px 18px;
-            border-radius: 40px;
+            background: var(--main-light);
+            padding: 6px 20px;
+            border-radius: var(--radius-full);
             font-size: 13px;
             font-weight: 500;
-            color: #5b3cc4;
+            color: var(--main-color);
             margin-bottom: 28px;
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            letter-spacing: 0.4px;
         }
         .hero h1 {
             font-size: 56px;
@@ -175,9 +199,9 @@
         .hero .subhead {
             font-size: 18px;
             color: var(--text-secondary);
-            max-width: 560px;
+            max-width: 580px;
             margin: 0 auto 32px;
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         .btn-wrap-all {
@@ -197,93 +221,62 @@
             justify-content: center;
         }
 
+        /* 按钮：仅文字 + 右侧箭头，左侧无任何图标 */
         .unified-btn {
             width: var(--btn-width);
             height: var(--btn-height);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            border-radius: 80px;
+            border-radius: var(--radius-full);
             font-size: 18px;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.26s cubic-bezier(0.2, 0.9, 0.4, 1);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             letter-spacing: 0.3px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-btn);
             color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+        }
+        /* 仅保留右侧细箭头 */
+        .unified-btn::after {
+            content: '›';
+            font-size: 22px;
+            margin-left: 8px;
+            opacity: 0.7;
+            transition: transform 0.26s ease;
+        }
+        .unified-btn:hover::after {
+            transform: translateX(4px);
+            opacity: 1;
         }
 
-        .btn-1 {
-            background: var(--btn1-light-bg);
-            border: 1px solid var(--btn1-light-border);
-        }
-        .btn-1:hover {
-            background: var(--btn1-light-hover);
-        }
-        .btn-2 {
-            background: var(--btn2-light-bg);
-            border: 1px solid var(--btn2-light-border);
-        }
-        .btn-2:hover {
-            background: var(--btn2-light-hover);
-        }
-        .btn-3 {
-            background: var(--btn3-light-bg);
-            border: 1px solid var(--btn3-light-border);
-        }
-        .btn-3:hover {
-            background: var(--btn3-light-hover);
-        }
+        .btn-1 { background: var(--btn1-light-bg); border: 1px solid var(--btn1-light-border); }
+        .btn-1:hover { background: var(--btn1-light-hover); }
+        .btn-2 { background: var(--btn2-light-bg); border: 1px solid var(--btn2-light-border); }
+        .btn-2:hover { background: var(--btn2-light-hover); }
+        .btn-3 { background: var(--btn3-light-bg); border: 1px solid var(--btn3-light-border); }
+        .btn-3:hover { background: var(--btn3-light-hover); }
 
-        [data-theme="dark"] .btn-1 {
-            background: var(--btn1-dark-bg);
-            border: 1px solid var(--btn1-dark-border);
-        }
-        [data-theme="dark"] .btn-1:hover {
-            background: var(--btn1-dark-hover);
-        }
-        [data-theme="dark"] .btn-2 {
-            background: var(--btn2-dark-bg);
-            border: 1px solid var(--btn2-dark-border);
-        }
-        [data-theme="dark"] .btn-2:hover {
-            background: var(--btn2-dark-hover);
-        }
-        [data-theme="dark"] .btn-3 {
-            background: var(--btn3-dark-bg);
-            border: 1px solid var(--btn3-dark-border);
-        }
-        [data-theme="dark"] .btn-3:hover {
-            background: var(--btn3-dark-hover);
-        }
+        [data-theme="dark"] .btn-1 { background: var(--btn1-dark-bg); border: 1px solid var(--btn1-dark-border); }
+        [data-theme="dark"] .btn-1:hover { background: var(--btn1-dark-hover); }
+        [data-theme="dark"] .btn-2 { background: var(--btn2-dark-bg); border: 1px solid var(--btn2-dark-border); }
+        [data-theme="dark"] .btn-2:hover { background: var(--btn2-dark-hover); }
+        [data-theme="dark"] .btn-3 { background: var(--btn3-dark-bg); border: 1px solid var(--btn3-dark-border); }
+        [data-theme="dark"] .btn-3:hover { background: var(--btn3-dark-hover); }
 
         .unified-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 22px -8px rgba(91, 60, 196, 0.2);
+            box-shadow: var(--shadow-md);
             color: var(--text-primary);
         }
         .unified-btn:active {
-            transform: translateY(1px);
-        }
-        .unified-btn span:first-child {
-            font-size: 1.2em;
-            transition: transform 0.2s ease;
-        }
-        .unified-btn:hover span:first-child {
-            transform: scale(1.05);
-        }
-        .join-icon {
-            transition: transform 0.2s ease;
-            font-size: 1.1em;
-        }
-        .unified-btn:hover .join-icon {
-            transform: translateX(4px);
-        }
-        [data-theme="dark"] .unified-btn {
-            font-weight: 500;
+            transform: translateY(1px) scale(0.98);
+            box-shadow: var(--shadow-sm);
         }
 
         .features {
@@ -297,16 +290,17 @@
             flex: 1;
             min-width: 240px;
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border-radius: 36px;
-            padding: 32px 24px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: var(--radius-lg);
+            padding: 32px 26px;
             text-align: center;
             border: 1px solid var(--card-border);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            box-shadow: var(--shadow-sm);
             opacity: 0;
             transform: translateY(20px);
             animation: cardReveal 0.5s ease forwards;
-            transition: all 0.3s ease;
+            transition: all 0.28s ease;
         }
         .feat-card:nth-child(1) { animation-delay: 0.05s; }
         .feat-card:nth-child(2) { animation-delay: 0.1s; }
@@ -315,18 +309,21 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .feat-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(91, 60, 196, 0.4);
-            box-shadow: 0 24px 32px -16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-6px);
+            border-color: var(--main-light);
+            box-shadow: var(--shadow-md);
         }
         .feat-icon {
-            font-size: 48px;
+            font-size: 46px;
             margin-bottom: 20px;
             display: inline-block;
-            transition: transform 0.2s;
+            color: var(--main-color);
+            opacity: 0.85;
+            transition: transform 0.24s ease;
         }
         .feat-card:hover .feat-icon {
             transform: scale(1.04);
+            opacity: 1;
         }
         .feat-card h3 {
             font-size: 22px;
@@ -337,7 +334,7 @@
         .feat-card p {
             font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         .footer {
@@ -347,9 +344,9 @@
             color: var(--text-muted);
             font-size: 13px;
             margin-top: 20px;
+            letter-spacing: 0.3px;
         }
 
-        /* 弹窗基础 */
         .welcome-modal-overlay,
         .shop-modal-overlay,
         .wechat-modal-overlay {
@@ -364,33 +361,34 @@
             justify-content: center;
             z-index: 2000;
             visibility: hidden;
-            transition: visibility 0.4s, background 0.4s ease;
+            transition: visibility 0.36s, background 0.36s ease;
             pointer-events: none;
         }
         .welcome-modal-overlay.active,
         .shop-modal-overlay.active,
         .wechat-modal-overlay.active {
             visibility: visible;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.45);
             pointer-events: auto;
         }
         @media (min-width: 768px) {
             .welcome-modal-overlay.active,
             .shop-modal-overlay.active,
             .wechat-modal-overlay.active {
-                backdrop-filter: blur(10px);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
             }
         }
 
         .welcome-modal,
         .shop-modal-container {
             background: var(--modal-bg);
-            border-radius: 52px;
+            border-radius: var(--radius-lg);
             text-align: center;
-            box-shadow: var(--shadow);
-            transform: scale(0.92);
+            box-shadow: var(--shadow-md);
+            transform: scale(0.93);
             opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.4s ease;
+            transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.36s ease;
             max-width: 90%;
             will-change: transform, opacity;
             max-height: 85vh;
@@ -399,12 +397,12 @@
         }
         .wechat-modal {
             background: var(--modal-bg);
-            border-radius: 52px;
+            border-radius: var(--radius-lg);
             text-align: center;
-            box-shadow: var(--shadow);
-            transform: scale(0.92);
+            box-shadow: var(--shadow-md);
+            transform: scale(0.93);
             opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.4s ease;
+            transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.36s ease;
             max-width: 90%;
             will-change: transform, opacity;
             max-height: 85vh;
@@ -420,17 +418,9 @@
             opacity: 1;
         }
 
-        .welcome-modal {
-            max-width: 460px;
-            padding: 44px 36px;
-        }
-        .shop-modal-container {
-            max-width: 520px;
-            padding: 40px 32px;
-        }
-        .wechat-modal {
-            max-width: 400px;
-        }
+        .welcome-modal { max-width: 460px; padding: 44px 36px; }
+        .shop-modal-container { max-width: 520px; padding: 40px 32px; }
+        .wechat-modal { max-width: 400px; }
 
         .welcome-modal h3,
         .shop-modal-container h3,
@@ -455,29 +445,18 @@
             gap: 16px;
             margin: 0 auto 24px;
         }
-        .qr-col {
-            flex: 1;
-            text-align: center;
-        }
-        .qr-tip {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
+        .qr-col { flex: 1; text-align: center; }
+        .qr-tip { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
         .qrcode-img {
             width: 140px;
             height: auto;
             margin: 0 auto;
             background: #f3f4f6;
-            border-radius: 24px;
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-sm);
         }
-        .qrcode-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        .qrcode-img img { width: 100%; height: auto; display: block; }
 
         .shop-options {
             display: flex;
@@ -488,7 +467,7 @@
         .shop-option {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 80px;
+            border-radius: var(--radius-full);
             padding: 16px 24px;
             font-size: 17px;
             font-weight: 500;
@@ -497,53 +476,56 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.2s ease;
+            transition: all 0.24s ease;
             cursor: pointer;
         }
         .shop-option .arrow {
             opacity: 0.5;
-            transition: transform 0.2s;
+            transition: transform 0.24s ease;
+            font-size: 20px;
         }
         .shop-option:hover {
-            background: #5b3cc4;
-            color: white;
-            transform: translateX(6px);
+            background: var(--main-color);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+        .shop-option:hover .arrow {
+            transform: translateX(4px);
+            opacity: 1;
         }
 
         .close-shop-modal, .close-wechat-btn {
             background: transparent;
             border: 1px solid var(--border-color);
             padding: 12px 32px;
-            border-radius: 60px;
+            border-radius: var(--radius-full);
             font-size: 15px;
             font-weight: 500;
             color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.24s ease;
             display: inline-block;
-            position:relative;
-            z-index:10;
         }
         .close-shop-modal:hover, .close-wechat-btn:hover {
-            background: #5b3cc4;
-            color: white;
+            background: var(--main-color);
+            color: #fff;
             border-color: transparent;
             transform: translateY(-2px);
         }
 
         .welcome-btn {
-            background: linear-gradient(135deg, #2d3a5e, #1e293b);
+            background: linear-gradient(135deg, #343f58, #283244);
             border: none;
             padding: 14px 32px;
-            border-radius: 50px;
+            border-radius: var(--radius-full);
             font-size: 16px;
             font-weight: 500;
-            color: white;
+            color: #ffffff;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.24s ease;
         }
         .welcome-btn:hover {
-            background: #5b3cc4;
+            background: var(--main-color);
             transform: translateY(-2px);
         }
 
@@ -553,9 +535,10 @@
             right: 28px;
             width: 48px;
             height: 48px;
-            border-radius: 30px;
+            border-radius: var(--radius-md);
             background: var(--bg-card);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
@@ -563,7 +546,7 @@
             cursor: pointer;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.2s ease;
+            transition: all 0.24s ease;
             z-index: 99;
             font-size: 22px;
             pointer-events: none;
@@ -575,61 +558,36 @@
             pointer-events: auto;
         }
         .back-top:hover {
-            background: #5b3cc4;
-            color: white;
+            background: var(--main-color);
+            color: #fff;
             transform: translateY(-3px);
         }
 
-        @media (max-width: 720px) {
-            .btn-wrap-all, .row-two {
-                flex-direction: column;
-                width: 100%;
-            }
-            .unified-btn {
-                width: 100% !important;
-            }
-            .container { padding: 0 20px; }
-            .hero h1 { font-size: 38px; }
-            .unified-btn { font-size: 16px; gap: 8px; }
-            .feat-card { min-width: 100%; }
-            .logo { font-size: 24px; }
-            .theme-toggle { width: 40px; height: 40px; font-size: 16px; }
+        @media (max-width:720px){
+            .btn-wrap-all,.row-two{flex-direction:column;width:100%;}
+            .unified-btn{width:100% !important;}
+            .container{padding:0 20px;}
+            .hero h1{font-size:38px;}
+            .unified-btn{font-size:16px;}
+            .feat-card{min-width:100%;}
+            .theme-toggle{width:40px;height:40px;font-size:16px;}
             .qrcode-img{width:120px;}
             .qr-row{gap:10px;}
-        }
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-        .logo-main {
-            font-size: 20px;
-            font-weight: 600;
-            background: linear-gradient(135deg, #2c3e66, #7c5cbf);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .logo-sub {
-            font-size: 10px;
-            font-weight: 400;
-            color: var(--text-muted, #6c757d);
-            letter-spacing: 0.3px;
+            .hero{padding:40px 0 30px;}
         }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="navbar">
         <div class="logo">
-            <img src="logo.png" class="logo-icon" alt="logo" style="width: 32px; height: 32px;">
+            <img src="logo.png" class="logo-icon" alt="logo">
             <div class="logo-text">
                 <div class="logo-main">龙创科技</div>
                 <div class="logo-sub">Loonginno Technology</div>
             </div>
         </div>
-        <div class="theme-toggle" id="themeToggle">🌙</div>
+        <div class="theme-toggle" id="themeToggle">☾</div>
     </div>
 
     <div class="hero">
@@ -640,20 +598,16 @@
 
     <div class="btn-wrap-all">
         <div class="row-two">
-            <button class="unified-btn btn-1" id="openShopBtn">
-                <span>🏪</span> 流量店铺 · 精选套餐
-            </button>
-            <button class="unified-btn btn-2" id="openWechatBtn">
-                <span>💬</span> 联系我 · 微信咨询
-            </button>
+            <!-- 按钮：纯文字，左侧无图标，只保留右侧箭头 -->
+            <button class="unified-btn btn-1" id="openShopBtn">流量店铺 · 精选套餐</button>
+            <button class="unified-btn btn-2" id="openWechatBtn">联系咨询 · 微信对接</button>
         </div>
         <div class="row-one-center">
-            <a href="business.html" class="unified-btn btn-3">
-                <span>🤝</span> 商务渠道 · 全网招商加盟 <span class="join-icon"></span>
-            </a>
+            <a href="business.html" class="unified-btn btn-3">商务渠道 · 全网招商加盟</a>
         </div>
     </div>
 
+    <!-- 下方三个卡片恢复原版正常简约emoji -->
     <div class="features">
         <div class="feat-card">
             <div class="feat-icon">⚡</div>
@@ -667,12 +621,11 @@
         </div>
         <div class="feat-card">
             <div class="feat-icon">🎯</div>
-            <h3>1v1咨询</h3>
+            <h3>一对一咨询</h3>
             <p>专业顾问全程服务，售后无忧</p>
         </div>
     </div>
 
-    <!-- 已修改智能自动版权年份 -->
     <div class="footer">
         <div>© <script>const startYear=2026,nowYear=new Date().getFullYear();document.write(startYear===nowYear?startYear:startYear+"-"+nowYear);</script> 龙创科技 · All Rights Reserved.</div>
     </div>
@@ -685,21 +638,21 @@
         <div class="welcome-message" id="customWelcomeMessage">
             龙创科技专注于高性价比通信服务。<br>点击「流量店铺」查看精选套餐，<br>或联系我获取专属方案。<br>1.2.3号及省内极速上门店铺下单后<br>务必联系我报单，<br>全国产品店铺务必先支付费用再下单，<br>请勿私自下单
         </div>
-        <button class="welcome-btn" id="closeWelcomeBtn">开始探索 →</button>
+        <button class="welcome-btn" id="closeWelcomeBtn">开始探索</button>
     </div>
 </div>
 
 <!-- 五个店铺选项弹窗 -->
 <div class="shop-modal-overlay" id="shopModal">
     <div class="shop-modal-container">
-        <h3>📱 流量店铺 · 热销推荐</h3>
+        <h3>流量店铺 · 热销推荐</h3>
         <p>点击下方选项，直达官方授权套餐</p>
         <div class="shop-options">
-            <a href="#" class="shop-option" data-default="https://link1.card"><span>✈️ 1号店铺</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link2.card"><span>✈️ 2号店铺</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link3.card"><span>✈️ 3号店铺</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link4.card"><span>✈️ 省内极速上门店铺</span><span class="arrow">→</span></a>
-            <a href="#" class="shop-option" data-default="https://link5.card"><span>🌎 全国发货产品店铺[有卡费]</span><span class="arrow">→</span></a>
+            <a href="#" class="shop-option" data-default="https://link1.card"><span>一号店铺</span><span class="arrow">›</span></a>
+            <a href="#" class="shop-option" data-default="https://link2.card"><span>二号店铺</span><span class="arrow">›</span></a>
+            <a href="#" class="shop-option" data-default="https://link3.card"><span>三号店铺</span><span class="arrow">›</span></a>
+            <a href="#" class="shop-option" data-default="https://link4.card"><span>省内极速上门店铺</span><span class="arrow">›</span></a>
+            <a href="#" class="shop-option" data-default="https://link5.card"><span>全国发货产品店铺(含卡费)</span><span class="arrow">›</span></a>
         </div>
         <button class="close-shop-modal" id="closeShopBtn">关闭</button>
     </div>
@@ -708,7 +661,7 @@
 <!-- 微信弹窗 -->
 <div class="wechat-modal-overlay" id="wechatModal">
     <div class="wechat-modal">
-        <h3>📱 扫码联系我</h3>
+        <h3>扫码联系</h3>
         <p>添加微信，获取一对一咨询<br>公众号:星联消息助手</p>
         <div class="qr-row">
             <div class="qr-col">
@@ -737,18 +690,18 @@
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         html.setAttribute('data-theme', savedTheme);
-        themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        themeToggle.textContent = savedTheme === 'dark' ? '☀' : '☾';
     }
     themeToggle.addEventListener('click', () => {
         const current = html.getAttribute('data-theme');
         if (current === 'dark') {
             html.removeAttribute('data-theme');
             localStorage.setItem('theme', 'light');
-            themeToggle.textContent = '🌙';
+            themeToggle.textContent = '☾';
         } else {
             html.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
-            themeToggle.textContent = '☀️';
+            themeToggle.textContent = '☀';
         }
     });
 
