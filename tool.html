@@ -136,25 +136,25 @@
     };
 
     const CardForm = ({ card, onChange, onRemove }) => (
-      <div className="bg-white rounded-xl shadow-md p-4">
-        <div className="flex justify-between items-center mb-3">
-        <h3 className="text-base sm:text-lg font-bold text-gray-800">{card.cardName}</h3>
-        <button onClick={() => onRemove(card.id)} className="flex items-center gap-1 px-2 py-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition text-sm">
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-bold text-gray-800">{card.cardName}</h3>
+        <button onClick={() => onRemove(card.id)} className="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">
           <i data-lucide="trash-2" className="w-4 h-4"></i>删除
         </button>
       </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">运营商</label><select value={card.operator || 'mobile'} onChange={(e) => onChange({ ...card, operator: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm"><option value="mobile">中国移动</option><option value="unicom">中国联通</option><option value="telecom">中国电信</option><option value="broadcast">中国广电</option></select></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">套餐名称</label><input value={card.cardName} onChange={(e) => onChange({ ...card, cardName: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">年龄限制</label><input value={card.ageLimit} onChange={(e) => onChange({ ...card, ageLimit: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">流量总量</label><input value={card.dataVolume} onChange={(e) => onChange({ ...card, dataVolume: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">流量细分</label><input value={card.dataBreakdown} onChange={(e) => onChange({ ...card, dataBreakdown: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">通话分钟数</label><input value={card.callMinutes} onChange={(e) => onChange({ ...card, callMinutes: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">套餐亮点</label><input value={card.features} onChange={(e) => onChange({ ...card, features: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">优惠月租</label><input value={card.price} onChange={(e) => onChange({ ...card, price: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">预存/首充话费</label><input value={card.promptText} onChange={(e) => onChange({ ...card, promptText: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div><label className="block text-xs sm:text-sm text-gray-600 mb-1">激活方式</label><input value={card.activateMethod} onChange={(e) => onChange({ ...card, activateMethod: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" /></div>
-          <div className="col-span-1 sm:col-span-2"><label className="block text-xs sm:text-sm text-gray-600 mb-1">详情介绍</label><textarea value={card.detailIntro} onChange={(e) => onChange({ ...card, detailIntro: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" rows="3"></textarea></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div><label className="block text-sm text-gray-600 mb-1">运营商</label><select value={card.operator || 'mobile'} onChange={(e) => onChange({ ...card, operator: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base"><option value="mobile">中国移动</option><option value="unicom">中国联通</option><option value="telecom">中国电信</option><option value="broadcast">中国广电</option></select></div>
+          <div><label className="block text-sm text-gray-600 mb-1">套餐名称</label><input value={card.cardName} onChange={(e) => onChange({ ...card, cardName: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">年龄限制</label><input value={card.ageLimit} onChange={(e) => onChange({ ...card, ageLimit: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">流量总量</label><input value={card.dataVolume} onChange={(e) => onChange({ ...card, dataVolume: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">流量细分</label><input value={card.dataBreakdown} onChange={(e) => onChange({ ...card, dataBreakdown: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">通话分钟数</label><input value={card.callMinutes} onChange={(e) => onChange({ ...card, callMinutes: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">套餐亮点</label><input value={card.features} onChange={(e) => onChange({ ...card, features: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">优惠月租</label><input value={card.price} onChange={(e) => onChange({ ...card, price: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">预存/首充话费</label><input value={card.promptText} onChange={(e) => onChange({ ...card, promptText: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">激活方式</label><input value={card.activateMethod} onChange={(e) => onChange({ ...card, activateMethod: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div className="col-span-1 sm:col-span-2"><label className="block text-sm text-gray-600 mb-1">详情介绍</label><textarea value={card.detailIntro} onChange={(e) => onChange({ ...card, detailIntro: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" rows="3"></textarea></div>
         </div>
       </div>
     );
@@ -169,35 +169,35 @@
         }
       };
       return (
-        <div className="space-y-4">
-          <div className="bg-white rounded-xl p-4">
-            <h3 className="text-lg font-bold mb-3">选择运营商模板</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl p-6">
+            <h3 className="text-lg font-bold mb-4">选择运营商模板</h3>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {templates.map(t => (
                 <button key={t.id} onClick={() => onSelect(t.id)} className={`border-2 rounded-xl transition-all ${selectedId === t.id ? 'border-blue-500 scale-105' : 'border-gray-200'}`}>
-                  {t.mainBg ? <img src={t.mainBg} className="w-full h-32 sm:h-40 object-cover" /> : <div className="w-full h-32 sm:h-40 flex items-center justify-center" style={{ backgroundColor: t.bgColor }}><span className="text-white font-bold text-sm">{t.name}</span></div>}
-                  <div className="bg-black/50 text-white text-center py-1.5 text-sm">{t.name}</div>
+                  {t.mainBg ? <img src={t.mainBg} className="w-full h-40 object-cover" /> : <div className="w-full h-40 flex items-center justify-center" style={{ backgroundColor: t.bgColor }}><span className="text-white font-bold">{t.name}</span></div>}
+                  <div className="bg-black/50 text-white text-center py-2">{t.name}</div>
                 </button>
               ))}
             </div>
           </div>
           {selectedId && (
-            <div className="bg-white rounded-xl p-4">
-              <h3 className="text-lg font-bold mb-3">上传模板图片</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-white rounded-xl p-6">
+              <h3 className="text-lg font-bold mb-4">上传模板图片</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm mb-2">主图模板 (999×999)</label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-400" onClick={() => document.getElementById('main-upload').click()}>
-                    <i data-lucide="upload" className="w-6 h-6 mx-auto mb-2 text-gray-400"></i>
-                    <span className="text-gray-500 text-sm">点击上传</span>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400" onClick={() => document.getElementById('main-upload').click()}>
+                    <i data-lucide="upload" className="w-8 h-8 mx-auto mb-2 text-gray-400"></i>
+                    <span className="text-gray-500">点击上传</span>
                   </div>
                   <input id="main-upload" type="file" className="hidden" onChange={(e) => handleUpload(selectedId, 'mainBg', e)} />
                 </div>
                 <div>
                   <label className="block text-sm mb-2">详情图模板 (999×2648)</label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-400" onClick={() => document.getElementById('detail-upload').click()}>
-                    <i data-lucide="upload" className="w-6 h-6 mx-auto mb-2 text-gray-400"></i>
-                    <span className="text-gray-500 text-sm">点击上传</span>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400" onClick={() => document.getElementById('detail-upload').click()}>
+                    <i data-lucide="upload" className="w-8 h-8 mx-auto mb-2 text-gray-400"></i>
+                    <span className="text-gray-500">点击上传</span>
                   </div>
                   <input id="detail-upload" type="file" className="hidden" onChange={(e) => handleUpload(selectedId, 'detailBg', e)} />
                 </div>
@@ -672,21 +672,21 @@
             </div>
             
           </div>
-          <div className="space-y-4">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="col-span-1 lg:col-span-2 space-y-4">
               <div className="border rounded-lg overflow-hidden">
-                <div className="bg-gray-100 px-3 py-2 flex justify-between">
+                <div className="bg-gray-100 px-4 py-2 flex justify-between">
                   <span className="text-sm font-medium">主图 (999 × 999)</span>
                   <span className="text-xs text-blue-600">点击文字可拖动</span>
                 </div>
-                <div className="bg-gray-50 p-2 overflow-auto" ref={mainRef} style={{ minHeight: '280px' }}>
-                  <div className="relative overflow-hidden" style={{ width: '280px', height: '280px', margin: '0 auto' }}>
+                <div className="bg-gray-50 p-2 overflow-auto" ref={mainRef} style={{ minHeight: '320px' }}>
+                  <div className="relative overflow-hidden" style={{ width: '320px', height: '320px', margin: '0 auto' }}>
                     <canvas 
                       ref={mainCanvasRef} 
                       width="999" 
                       height="999" 
                       className="cursor-pointer"
-                      style={{ width: '999px', height: '999px', transform: 'scale(0.2803)', transformOrigin: 'top left' }}
+                      style={{ width: '999px', height: '999px', transform: 'scale(0.3203)', transformOrigin: 'top left' }}
                       onClick={(e) => handleCanvasClick(e, 'main')}
                       onMouseDown={(e) => handleCanvasMouseDown(e, 'main')}
                     ></canvas>
@@ -694,11 +694,11 @@
                 </div>
               </div>
               <div className="border rounded-lg overflow-hidden">
-                <div className="bg-gray-100 px-3 py-2 flex justify-between">
+                <div className="bg-gray-100 px-4 py-2 flex justify-between">
                   <span className="text-sm font-medium">详情图 (999 × 2648)</span>
                   <span className="text-xs text-blue-600">点击文字可拖动</span>
                 </div>
-                <div className="bg-gray-50 p-2 overflow-auto" ref={detailRef} style={{ minHeight: '650px' }}>
+                <div className="bg-gray-50 p-2 overflow-auto" ref={detailRef} style={{ minHeight: '750px' }}>
                   <div className="relative overflow-hidden" style={{ width: '280px', height: '741px', margin: '0 auto' }}>
                     <canvas 
                       ref={detailCanvasRef} 
@@ -713,7 +713,7 @@
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-1 lg:col-span-1">
+            <div className="space-y-4">
               <PositionEditor
                 positions={textPositions}
                 setPositions={setTextPositions}
@@ -851,166 +851,166 @@
 
       return (
         <div>
-          <header className="bg-blue-500 text-white py-3 sm:py-4">
+          <header className="bg-blue-500 text-white py-4 sm:py-6">
             <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-              <h1 className="text-base sm:text-lg font-bold">流量卡宣传图生成工具</h1>
+              <h1 className="text-lg sm:text-2xl font-bold">流量卡宣传图批量生成工具</h1>
               <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2">
                 <i data-lucide="menu" className="w-6 h-6"></i>
               </button>
             </div>
           </header>
-          <nav className="bg-white sticky top-0 z-10 border-b border-gray-100">
-            <div className={`max-w-7xl mx-auto px-2 sm:px-4 flex flex-col lg:flex-row gap-1 lg:gap-2 ${mobileMenuOpen ? 'block' : 'hidden lg:flex'}`}>
-              <button onClick={() => { setActiveTab('input'); setMobileMenuOpen(false); }} className={`px-3 sm:px-4 py-2 sm:py-3 font-medium text-left lg:text-center text-sm sm:text-base ${activeTab === 'input' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50' : 'text-gray-600 hover:bg-gray-50'}`}>
-                <i data-lucide="file-text" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>数据输入
+          <nav className="bg-white sticky top-0 z-10">
+            <div className={`max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-2 lg:gap-4 ${mobileMenuOpen ? 'block' : 'hidden lg:flex'}`}>
+              <button onClick={() => { setActiveTab('input'); setMobileMenuOpen(false); }} className={`px-4 sm:px-6 py-3 font-medium text-left lg:text-center ${activeTab === 'input' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600'}`}>
+                <i data-lucide="file-text" className="w-5 h-5 inline mr-2"></i>数据输入
               </button>
-              <button onClick={() => { setActiveTab('template'); setMobileMenuOpen(false); }} className={`px-3 sm:px-4 py-2 sm:py-3 font-medium text-left lg:text-center text-sm sm:text-base ${activeTab === 'template' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50' : 'text-gray-600 hover:bg-gray-50'}`}>
-                <i data-lucide="palette" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>模板选择
+              <button onClick={() => { setActiveTab('template'); setMobileMenuOpen(false); }} className={`px-4 sm:px-6 py-3 font-medium text-left lg:text-center ${activeTab === 'template' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600'}`}>
+                <i data-lucide="palette" className="w-5 h-5 inline mr-2"></i>模板选择
               </button>
-              <button onClick={() => { setActiveTab('preview'); setMobileMenuOpen(false); }} className={`px-3 sm:px-4 py-2 sm:py-3 font-medium text-left lg:text-center text-sm sm:text-base ${activeTab === 'preview' ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50' : 'text-gray-600 hover:bg-gray-50'}`}>
-                <i data-lucide="eye" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>预览生成
+              <button onClick={() => { setActiveTab('preview'); setMobileMenuOpen(false); }} className={`px-4 sm:px-6 py-3 font-medium text-left lg:text-center ${activeTab === 'preview' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600'}`}>
+                <i data-lucide="eye" className="w-5 h-5 inline mr-2"></i>预览生成
               </button>
               
               <button onClick={() => {
                 localStorage.setItem('cardGenerator_defaultPositions', JSON.stringify(textPositions));
                 alert('当前字段格式已保存为默认值！');
-              }} className="px-3 sm:px-4 py-2 sm:py-3 text-gray-500 hover:text-green-500 text-left lg:text-center text-sm sm:text-base">
-                <i data-lucide="save" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>保存为默认
+              }} className="px-4 py-3 text-gray-500 hover:text-green-500 text-left lg:text-center">
+                <i data-lucide="save" className="w-5 h-5 inline mr-2"></i>保存为默认
               </button>
             </div>
           </nav>
-          <main className="max-w-7xl mx-auto px-3 sm:px-4 py-6">
+          <main className="max-w-7xl mx-auto px-4 py-8">
             {activeTab === 'input' && (
-              <div className="space-y-4">
-                <div className="space-y-3">
-                  <h2 className="text-lg sm:text-xl font-bold">套餐数据 ({cards.length})</h2>
-                  <div className="flex flex-wrap gap-2">
-                    <button onClick={() => setCards([...cards, { ...INITIAL_CARD, id: Date.now().toString(), cardName: `套餐${cards.length + 1}` }])} className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-500 text-white font-medium rounded-lg text-sm sm:text-base">
-                      <i data-lucide="plus" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>添加套餐
-                    </button>
-                    <button onClick={() => {
-                      const template = `\uFEFF运营商,套餐名称,年龄限制,流量总量,流量细分,通话分钟数,套餐亮点,优惠月租,预存/首充话费,激活方式,详情介绍
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
+                    <h2 className="text-xl font-bold">套餐数据</h2>
+                    <div className="flex flex-wrap gap-2">
+                      <button onClick={() => setCards([...cards, { ...INITIAL_CARD, id: Date.now().toString(), cardName: `套餐${cards.length + 1}` }])} className="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg">
+                        <i data-lucide="plus" className="w-5 h-5 inline mr-2"></i>添加套餐
+                      </button>
+                      <button onClick={() => {
+                        const template = `\uFEFF运营商,套餐名称,年龄限制,流量总量,流量细分,通话分钟数,套餐亮点,优惠月租,预存/首充话费,激活方式,详情介绍
 "中国移动","慧缘卡","18-24周岁","340G","310G通用+30G定向","500","三年优惠 五个会员","50","办理预存100话费享优惠","下单后自动激活","激活后首月免费使用"
 "中国联通","星耀卡","18-30周岁","200G","180G通用+20G定向","300","两年优惠 三个会员","39","下单立减20元","手动扫码激活","适合学生使用"`;
-                      const blob = new Blob([template], { type: 'text/csv;charset=utf-8;' });
-                      saveAs(blob, '套餐模板.csv');
-                    }} className="px-3 py-2 sm:px-4 sm:py-2 bg-green-500 text-white font-medium rounded-lg text-sm sm:text-base">
-                      <i data-lucide="download" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>下载模板
-                    </button>
-                    <button onClick={() => {
-                      const escapeCSV = (value) => {
-                        if (!value) return '""';
-                        const escaped = value.toString().replace(/"/g, '""');
-                        return `"${escaped}"`;
-                      };
-                      const lines = [
-                        '\uFEFF运营商,套餐名称,年龄限制,流量总量,流量细分,通话分钟数,套餐亮点,优惠月租,预存/首充话费,激活方式,详情介绍'
-                      ];
-                      cards.forEach(card => {
-                        const operatorNames = { mobile: '中国移动', unicom: '中国联通', telecom: '中国电信', broadcast: '中国广电' };
-                        lines.push([
-                          escapeCSV(operatorNames[card.operator] || card.operator),
-                          escapeCSV(card.cardName),
-                          escapeCSV(card.ageLimit),
-                          escapeCSV(card.dataVolume),
-                          escapeCSV(card.dataBreakdown),
-                          escapeCSV(card.callMinutes),
-                          escapeCSV(card.features),
-                          escapeCSV(card.price),
-                          escapeCSV(card.promptText),
-                          escapeCSV(card.activateMethod),
-                          escapeCSV(card.detailIntro)
-                        ].join(','));
-                      });
-                      const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
-                      saveAs(blob, '套餐数据.csv');
-                    }} className="px-3 py-2 sm:px-4 sm:py-2 bg-orange-500 text-white font-medium rounded-lg text-sm sm:text-base">
-                      <i data-lucide="download" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>导出数据
-                    </button>
-                    <label className="px-3 py-2 sm:px-4 sm:py-2 bg-purple-500 text-white font-medium rounded-lg cursor-pointer text-sm sm:text-base">
-                      <i data-lucide="upload" className="w-4 h-4 sm:w-5 sm:h-5 inline mr-1 sm:mr-2"></i>CSV导入
-                      <input type="file" accept=".csv" className="hidden" onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (!file) return;
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                          const text = event.target.result;
-                          const parseCSV = (csvText) => {
-                            const rows = [];
-                            let currentRow = [];
-                            let currentValue = '';
-                            let inQuotes = false;
-                            for (let i = 0; i < csvText.length; i++) {
-                              const char = csvText[i];
-                              if (char === '"') {
-                                if (inQuotes && csvText[i + 1] === '"') {
-                                  currentValue += '"';
-                                  i++;
-                                } else {
-                                  inQuotes = !inQuotes;
-                                }
-                              } else if (char === ',' && !inQuotes) {
-                                currentRow.push(currentValue.trim());
-                                currentValue = '';
-                              } else if ((char === '\n' || char === '\r') && !inQuotes) {
-                                if (char === '\r' && csvText[i + 1] === '\n') i++;
-                                currentRow.push(currentValue.trim());
-                                if (currentRow.length > 0) {
-                                  rows.push(currentRow);
-                                }
-                                currentRow = [];
-                                currentValue = '';
-                              } else {
-                                currentValue += char;
-                              }
-                            }
-                            if (currentValue !== '' || currentRow.length > 0) {
-                              currentRow.push(currentValue.trim());
-                              rows.push(currentRow);
-                            }
-                            return rows;
-                          };
-                          const rows = parseCSV(text);
-                          if (rows.length < 2) {
-                            alert('CSV文件格式不正确');
-                            return;
-                          }
-                          const headers = rows[0];
-                          const newCards = rows.slice(1).map((values, index) => {
-                            const card = { ...INITIAL_CARD, id: Date.now().toString() + '_' + index };
-                            headers.forEach((header, i) => {
-                              switch(header.trim()) {
-                                case '运营商': 
-                                  const op = values[i] || '';
-                                  if (op.includes('移动')) card.operator = 'mobile';
-                                  else if (op.includes('联通')) card.operator = 'unicom';
-                                  else if (op.includes('电信')) card.operator = 'telecom';
-                                  else if (op.includes('广电')) card.operator = 'broadcast';
-                                  break;
-                                case '套餐名称': card.cardName = values[i] || ''; break;
-                                case '年龄限制': card.ageLimit = values[i] || ''; break;
-                                case '流量总量': card.dataVolume = values[i] || ''; break;
-                                case '流量细分': card.dataBreakdown = values[i] || ''; break;
-                                case '通话分钟数': card.callMinutes = values[i] || ''; break;
-                                case '套餐亮点': card.features = values[i] || ''; break;
-                                case '优惠月租': card.price = values[i] || ''; break;
-                                case '提示文字':
-                                case '预存/首充话费': card.promptText = values[i] || ''; break;
-                                case '激活方式': card.activateMethod = values[i] || ''; break;
-                                case '详情介绍': card.detailIntro = values[i] || ''; break;
-                              }
-                            });
-                            return card;
-                          });
-                          setCards(newCards);
-                          alert(`成功导入 ${newCards.length} 条数据`);
+                        const blob = new Blob([template], { type: 'text/csv;charset=utf-8;' });
+                        saveAs(blob, '套餐模板.csv');
+                      }} className="px-4 py-2 bg-green-500 text-white font-medium rounded-lg">
+                        <i data-lucide="download" className="w-5 h-5 inline mr-2"></i>下载模板
+                      </button>
+                      <button onClick={() => {
+                        const escapeCSV = (value) => {
+                          if (!value) return '""';
+                          const escaped = value.toString().replace(/"/g, '""');
+                          return `"${escaped}"`;
                         };
-                        reader.readAsText(file, 'utf-8');
-                      }} />
-                    </label>
+                        const lines = [
+                          '\uFEFF运营商,套餐名称,年龄限制,流量总量,流量细分,通话分钟数,套餐亮点,优惠月租,预存/首充话费,激活方式,详情介绍'
+                        ];
+                        cards.forEach(card => {
+                          const operatorNames = { mobile: '中国移动', unicom: '中国联通', telecom: '中国电信', broadcast: '中国广电' };
+                          lines.push([
+                            escapeCSV(operatorNames[card.operator] || card.operator),
+                            escapeCSV(card.cardName),
+                            escapeCSV(card.ageLimit),
+                            escapeCSV(card.dataVolume),
+                            escapeCSV(card.dataBreakdown),
+                            escapeCSV(card.callMinutes),
+                            escapeCSV(card.features),
+                            escapeCSV(card.price),
+                            escapeCSV(card.promptText),
+                            escapeCSV(card.activateMethod),
+                            escapeCSV(card.detailIntro)
+                          ].join(','));
+                        });
+                        const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+                        saveAs(blob, '套餐数据.csv');
+                      }} className="px-4 py-2 bg-orange-500 text-white font-medium rounded-lg">
+                        <i data-lucide="download" className="w-5 h-5 inline mr-2"></i>导出数据
+                      </button>
+                      <label className="px-4 py-2 bg-purple-500 text-white font-medium rounded-lg cursor-pointer">
+                        <i data-lucide="upload" className="w-5 h-5 inline mr-2"></i>CSV导入
+                        <input type="file" accept=".csv" className="hidden" onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const text = event.target.result;
+                            const parseCSV = (csvText) => {
+                              const rows = [];
+                              let currentRow = [];
+                              let currentValue = '';
+                              let inQuotes = false;
+                              for (let i = 0; i < csvText.length; i++) {
+                                const char = csvText[i];
+                                if (char === '"') {
+                                  if (inQuotes && csvText[i + 1] === '"') {
+                                    currentValue += '"';
+                                    i++;
+                                  } else {
+                                    inQuotes = !inQuotes;
+                                  }
+                                } else if (char === ',' && !inQuotes) {
+                                  currentRow.push(currentValue.trim());
+                                  currentValue = '';
+                                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                                  if (char === '\r' && csvText[i + 1] === '\n') i++;
+                                  currentRow.push(currentValue.trim());
+                                  if (currentRow.length > 0) {
+                                    rows.push(currentRow);
+                                  }
+                                  currentRow = [];
+                                  currentValue = '';
+                                } else {
+                                  currentValue += char;
+                                }
+                              }
+                              if (currentValue !== '' || currentRow.length > 0) {
+                                currentRow.push(currentValue.trim());
+                                rows.push(currentRow);
+                              }
+                              return rows;
+                            };
+                            const rows = parseCSV(text);
+                            if (rows.length < 2) {
+                              alert('CSV文件格式不正确');
+                              return;
+                            }
+                            const headers = rows[0];
+                            const newCards = rows.slice(1).map((values, index) => {
+                              const card = { ...INITIAL_CARD, id: Date.now().toString() + '_' + index };
+                              headers.forEach((header, i) => {
+                                switch(header.trim()) {
+                                  case '运营商': 
+                                    const op = values[i] || '';
+                                    if (op.includes('移动')) card.operator = 'mobile';
+                                    else if (op.includes('联通')) card.operator = 'unicom';
+                                    else if (op.includes('电信')) card.operator = 'telecom';
+                                    else if (op.includes('广电')) card.operator = 'broadcast';
+                                    break;
+                                  case '套餐名称': card.cardName = values[i] || ''; break;
+                                  case '年龄限制': card.ageLimit = values[i] || ''; break;
+                                  case '流量总量': card.dataVolume = values[i] || ''; break;
+                                  case '流量细分': card.dataBreakdown = values[i] || ''; break;
+                                  case '通话分钟数': card.callMinutes = values[i] || ''; break;
+                                  case '套餐亮点': card.features = values[i] || ''; break;
+                                  case '优惠月租': card.price = values[i] || ''; break;
+                                  case '提示文字':
+                                  case '预存/首充话费': card.promptText = values[i] || ''; break;
+                                  case '激活方式': card.activateMethod = values[i] || ''; break;
+                                  case '详情介绍': card.detailIntro = values[i] || ''; break;
+                                }
+                              });
+                              return card;
+                            });
+                            setCards(newCards);
+                            alert(`成功导入 ${newCards.length} 条数据`);
+                          };
+                          reader.readAsText(file, 'utf-8');
+                        }} />
+                      </label>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-4">
                   {cards.map(card => (
                     <CardForm key={card.id} card={card} onChange={(updated) => setCards(cards.map(c => c.id === card.id ? updated : c))} onRemove={setCards.bind(null, cards.filter(c => c.id !== card.id))} />
                   ))}
