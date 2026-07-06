@@ -57,6 +57,9 @@
             --btn3-light-bg: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(248,243,255,0.65));
             --btn3-light-border: rgba(175, 82, 222, 0.22);
             --btn3-light-hover: linear-gradient(135deg, rgba(248,243,255,0.72), rgba(240,232,250,0.82));
+            /* 次要工具弱按钮变量 */
+            --tool-btn-bg-light: rgba(0,0,0,0.04);
+            --tool-btn-bg-dark: rgba(255,255,255,0.06);
         }
 
         [data-theme="dark"] {
@@ -221,7 +224,7 @@
             justify-content: center;
         }
 
-        /* 按钮：仅文字 + 右侧箭头，左侧无任何图标 */
+        /* 主功能大按钮样式 */
         .unified-btn {
             width: var(--btn-width);
             height: var(--btn-height);
@@ -242,7 +245,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* 仅保留右侧细箭头 */
         .unified-btn::after {
             content: '›';
             font-size: 22px;
@@ -284,7 +286,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 32px;
-            margin: 40px 0 80px;
+            margin: 40px 0 60px;
         }
         .feat-card {
             flex: 1;
@@ -335,6 +337,41 @@
             font-size: 15px;
             color: var(--text-secondary);
             line-height: 1.55;
+        }
+
+        /* 次要工具区域 */
+        .tool-area {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .tool-tip-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        /* 弱化小按钮，和主按钮完全区分 */
+        .tool-light-btn {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 7px 20px;
+            border-radius: 99px;
+            background: var(--tool-btn-bg-light);
+            transition: 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+        [data-theme="dark"] .tool-light-btn {
+            background: var(--tool-btn-bg-dark);
+        }
+        .tool-light-btn::after {
+            content: "›";
+            font-size: 15px;
+            margin-left: 5px;
+            opacity: 0.5;
+        }
+        .tool-light-btn:hover {
+            color: var(--text-primary);
+            background: var(--border-color);
         }
 
         .footer {
@@ -596,22 +633,17 @@
         <div class="subhead">为企业与个人提供高性价比通信方案，5G专网、聚合流量，技术驱动效率。</div>
     </div>
 
+    <!-- 顶部仅保留3个核心主按钮，移除工具 -->
     <div class="btn-wrap-all">
         <div class="row-two">
-            <!-- 按钮：纯文字，左侧无图标，只保留右侧箭头 -->
             <button class="unified-btn btn-1" id="openShopBtn">流量店铺 · 精选套餐</button>
             <button class="unified-btn btn-2" id="openWechatBtn">联系咨询 · 微信对接</button>
         </div>
         <div class="row-one-center">
             <a href="business.html" class="unified-btn btn-3">商务渠道 · 全网招商加盟</a>
         </div>
-        <!-- 新增工具按钮，完整外链 -->
-        <div class="row-one-center">
-            <a href="https://loonginno.cn/tool.html" target="_blank" class="unified-btn btn-3">流量卡宣传图批量生成工具 · SPBG Tool</a>
-        </div>
     </div>
 
-    <!-- 下方三个卡片恢复原版正常简约emoji -->
     <div class="features">
         <div class="feat-card">
             <div class="feat-icon">⚡</div>
@@ -628,6 +660,12 @@
             <h3>一对一咨询</h3>
             <p>专业顾问全程服务，售后无忧</p>
         </div>
+    </div>
+
+    <!-- 次要工具放置卡片下方，弱化展示 -->
+    <div class="tool-area">
+        <div class="tool-tip-text">配套辅助工具</div>
+        <a href="https://loonginno.cn/tool.html" target="_blank" class="tool-light-btn">流量卡宣传图批量生成工具 · SPBG Tool</a>
     </div>
 
     <div class="footer">
