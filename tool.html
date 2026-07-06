@@ -680,7 +680,7 @@
                   <span className="text-xs text-blue-600">点击文字可拖动</span>
                 </div>
                 <div className="bg-gray-50 p-2 overflow-auto" ref={mainRef} style={{ minHeight: '320px' }}>
-                  <div className="relative overflow-hidden" style={{ width: '320px', height: '320px', margin: '0 auto' }}>
+                  <div className="relative overflow-hidden mx-auto" style={{ width: '320px', height: '320px' }}>
                     <canvas 
                       ref={mainCanvasRef} 
                       width="999" 
@@ -879,7 +879,7 @@
               </button>
             </div>
           </nav>
-          <main className="max-w-7xl mx-auto px-4 py-8">
+          <main className="max-w-7xl mx-auto px-4 py-8 pb-24 lg:pb-8">
             {activeTab === 'input' && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-4">
@@ -1038,7 +1038,30 @@
               />
             )}
           </main>
-          <footer className="bg-gray-800 text-gray-400 py-6 mt-12">
+          <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+            <div className="flex justify-around items-center py-2">
+              <button onClick={() => { setActiveTab('input'); setMobileMenuOpen(false); }} className={`flex flex-col items-center justify-center w-full py-2 ${activeTab === 'input' ? 'text-blue-600' : 'text-gray-400'}`}>
+                <i data-lucide="file-text" className="w-5 h-5"></i>
+                <span className="text-xs mt-0.5">数据输入</span>
+              </button>
+              <button onClick={() => { setActiveTab('template'); setMobileMenuOpen(false); }} className={`flex flex-col items-center justify-center w-full py-2 ${activeTab === 'template' ? 'text-blue-600' : 'text-gray-400'}`}>
+                <i data-lucide="palette" className="w-5 h-5"></i>
+                <span className="text-xs mt-0.5">模板选择</span>
+              </button>
+              <button onClick={() => { setActiveTab('preview'); setMobileMenuOpen(false); }} className={`flex flex-col items-center justify-center w-full py-2 ${activeTab === 'preview' ? 'text-blue-600' : 'text-gray-400'}`}>
+                <i data-lucide="eye" className="w-5 h-5"></i>
+                <span className="text-xs mt-0.5">预览生成</span>
+              </button>
+              <button onClick={() => {
+                localStorage.setItem('cardGenerator_defaultPositions', JSON.stringify(textPositions));
+                alert('当前字段格式已保存为默认值！');
+              }} className="flex flex-col items-center justify-center w-full py-2 text-gray-400 hover:text-green-500">
+                <i data-lucide="save" className="w-5 h-5"></i>
+                <span className="text-xs mt-0.5">保存默认</span>
+              </button>
+            </div>
+          </nav>
+          <footer className="bg-gray-800 text-gray-400 py-6 mt-12 lg:mt-12 pb-24 lg:pb-6">
             <div className="max-w-7xl mx-auto px-4 text-center text-sm">流量卡宣传图批量生成工具</div>
             <div className="max-w-7xl mx-auto px-4 text-center mt-2 text-xs text-blue-400">龙创科技 loonginno.cn</div>
             <div className="max-w-7xl mx-auto px-4 text-center mt-3">
