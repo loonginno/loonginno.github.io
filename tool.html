@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>龙创科技· 流量卡宣传图批量生成工具</title>
+  <link rel="shortcut icon" href="/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .editable-text { cursor: pointer; pointer-events: auto; user-select: none; white-space: pre-wrap; z-index: 10; }
+    .editable-text:hover { outline: 2px dashed #3b82f6; }
+    .editable-text.selected { outline: 2px solid #3b82f6; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useRef, useEffect, useCallback } = React;
+
+    const INITIAL_CARD = {
+      id: Date.now().toString(),
+      operator: 'mobile',
+      cardName: '慧缘卡',
+      dataVolume: '340G',
+      dataBreakdown: '310G通用+30G定向',
+      callMinutes: '500',
+      price: '50',
+      ageLimit: '18-24周岁',
+      features: '三年优惠 五个会员',
+      promptText: '办理预存100话费享优惠',
+      activateMethod: '下单后自动激活',
+      detailIntro: '激活后首月免费使用，套餐内容丰富，适合学生和上班族使用'
+    };
+
+    const INITIAL_TEXT_POSITIONS = {
+      mobile: {
+        main: {
+          ageLimit: { x: 850, y: 70, fontSize: 24, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 150, height: 40 },
+          cardName: { x: 499, y: 220, fontSize: 64, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 80 },
+          dataVolume: { x: 280, y: 400, fontSize: 140, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 160 },
+          dataBreakdown: { x: 499, y: 500, fontSize: 26, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          callMinutes: { x: 499, y: 570, fontSize: 32, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 499, y: 640, fontSize: 28, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          price: { x: 160, y: 840, fontSize: 90, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 120 },
+          promptText: { x: 499, y: 940, fontSize: 26, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 }
+        },
+        detail: {
+          title: { x: 499, y: 80, fontSize: 36, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 50 },
+          ageLimit: { x: 280, y: 215, fontSize: 28, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          monthFee: { x: 280, y: 285, fontSize: 40, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 60 },
+          dataVolume: { x: 280, y: 355, fontSize: 36, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          callMinutes: { x: 280, y: 425, fontSize: 36, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 280, y: 495, fontSize: 28, fontWeight: 700, color: '#228B22', fontFamily: 'KaiTi', rotation: 0, width: 400, height: 40 },
+          promptText: { x: 280, y: 565, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          activateMethod: { x: 280, y: 625, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          detailIntro: { x: 280, y: 685, fontSize: 24, fontWeight: 400, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 400 }
+        }
+      },
+      unicom: {
+        main: {
+          ageLimit: { x: 850, y: 70, fontSize: 24, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 150, height: 40 },
+          cardName: { x: 499, y: 220, fontSize: 64, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 80 },
+          dataVolume: { x: 280, y: 400, fontSize: 140, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 160 },
+          dataBreakdown: { x: 499, y: 500, fontSize: 26, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          callMinutes: { x: 499, y: 570, fontSize: 32, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 499, y: 640, fontSize: 28, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          price: { x: 160, y: 840, fontSize: 90, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 120 },
+          promptText: { x: 499, y: 940, fontSize: 26, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 }
+        },
+        detail: {
+          title: { x: 499, y: 80, fontSize: 36, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 50 },
+          ageLimit: { x: 280, y: 215, fontSize: 28, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          monthFee: { x: 280, y: 285, fontSize: 40, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 60 },
+          dataVolume: { x: 280, y: 355, fontSize: 36, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          callMinutes: { x: 280, y: 425, fontSize: 36, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 280, y: 495, fontSize: 28, fontWeight: 700, color: '#DC143C', fontFamily: 'KaiTi', rotation: 0, width: 400, height: 40 },
+          promptText: { x: 280, y: 565, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          activateMethod: { x: 280, y: 625, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          detailIntro: { x: 280, y: 685, fontSize: 24, fontWeight: 400, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 400 }
+        }
+      },
+      telecom: {
+        main: {
+          ageLimit: { x: 850, y: 70, fontSize: 24, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 150, height: 40 },
+          cardName: { x: 499, y: 220, fontSize: 64, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 80 },
+          dataVolume: { x: 280, y: 400, fontSize: 140, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 160 },
+          dataBreakdown: { x: 499, y: 500, fontSize: 26, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          callMinutes: { x: 499, y: 570, fontSize: 32, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 499, y: 640, fontSize: 28, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          price: { x: 160, y: 840, fontSize: 90, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 120 },
+          promptText: { x: 499, y: 940, fontSize: 26, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 }
+        },
+        detail: {
+          title: { x: 499, y: 80, fontSize: 36, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 50 },
+          ageLimit: { x: 280, y: 215, fontSize: 28, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          monthFee: { x: 280, y: 285, fontSize: 40, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 60 },
+          dataVolume: { x: 280, y: 355, fontSize: 36, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          callMinutes: { x: 280, y: 425, fontSize: 36, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 280, y: 495, fontSize: 28, fontWeight: 700, color: '#0066CC', fontFamily: 'KaiTi', rotation: 0, width: 400, height: 40 },
+          promptText: { x: 280, y: 565, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          activateMethod: { x: 280, y: 625, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          detailIntro: { x: 280, y: 685, fontSize: 24, fontWeight: 400, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 400 }
+        }
+      },
+      broadcast: {
+        main: {
+          ageLimit: { x: 850, y: 70, fontSize: 24, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 150, height: 40 },
+          cardName: { x: 499, y: 220, fontSize: 64, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 80 },
+          dataVolume: { x: 280, y: 400, fontSize: 140, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 160 },
+          dataBreakdown: { x: 499, y: 500, fontSize: 26, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          callMinutes: { x: 499, y: 570, fontSize: 32, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 499, y: 640, fontSize: 28, fontWeight: 700, color: '#000000', fontFamily: 'KaiTi', rotation: 0, width: 500, height: 40 },
+          price: { x: 160, y: 840, fontSize: 90, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 120 },
+          promptText: { x: 499, y: 940, fontSize: 26, fontWeight: 700, color: '#ffffff', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 }
+        },
+        detail: {
+          title: { x: 499, y: 80, fontSize: 36, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 50 },
+          ageLimit: { x: 280, y: 215, fontSize: 28, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          monthFee: { x: 280, y: 285, fontSize: 40, fontWeight: 700, color: '#FFD700', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 60 },
+          dataVolume: { x: 280, y: 355, fontSize: 36, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 300, height: 50 },
+          callMinutes: { x: 280, y: 425, fontSize: 36, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 200, height: 50 },
+          features: { x: 280, y: 495, fontSize: 28, fontWeight: 700, color: '#FF8C00', fontFamily: 'KaiTi', rotation: 0, width: 400, height: 40 },
+          promptText: { x: 280, y: 565, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          activateMethod: { x: 280, y: 625, fontSize: 24, fontWeight: 700, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 40 },
+          detailIntro: { x: 280, y: 685, fontSize: 24, fontWeight: 400, color: '#333333', fontFamily: 'KaiTi', rotation: 0, width: 600, height: 400 }
+        }
+      }
+    };
+
+    const CardForm = ({ card, onChange, onRemove }) => (
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-bold text-gray-800">{card.cardName}</h3>
+        <button onClick={() => onRemove(card.id)} className="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition">
+          <i data-lucide="trash-2" className="w-4 h-4"></i>删除
+        </button>
+      </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div><label className="block text-sm text-gray-600 mb-1">运营商</label><select value={card.operator || 'mobile'} onChange={(e) => onChange({ ...card, operator: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base"><option value="mobile">中国移动</option><option value="unicom">中国联通</option><option value="telecom">中国电信</option><option value="broadcast">中国广电</option></select></div>
+          <div><label className="block text-sm text-gray-600 mb-1">套餐名称</label><input value={card.cardName} onChange={(e) => onChange({ ...card, cardName: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">年龄限制</label><input value={card.ageLimit} onChange={(e) => onChange({ ...card, ageLimit: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">流量总量</label><input value={card.dataVolume} onChange={(e) => onChange({ ...card, dataVolume: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">流量细分</label><input value={card.dataBreakdown} onChange={(e) => onChange({ ...card, dataBreakdown: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">通话分钟数</label><input value={card.callMinutes} onChange={(e) => onChange({ ...card, callMinutes: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">套餐亮点</label><input value={card.features} onChange={(e) => onChange({ ...card, features: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">优惠月租</label><input value={card.price} onChange={(e) => onChange({ ...card, price: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">预存/首充话费</label><input value={card.promptText} onChange={(e) => onChange({ ...card, promptText: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div><label className="block text-sm text-gray-600 mb-1">激活方式</label><input value={card.activateMethod} onChange={(e) => onChange({ ...card, activateMethod: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" /></div>
+          <div className="col-span-1 sm:col-span-2"><label className="block text-sm text-gray-600 mb-1">详情介绍</label><textarea value={card.detailIntro} onChange={(e) => onChange({ ...card, detailIntro: e.target.value })} className="w-full px-4 py-3 border rounded-lg text-base" rows="3"></textarea></div>
+        </div>
+      </div>
+    );
+
+    const TemplateSelector = ({ templates, selectedId, onSelect, onTemplateUpdate }) => {
+      const handleUpload = (templateId, type, e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => onTemplateUpdate(templateId, { [type]: event.target.result });
+          reader.readAsDataURL(file);
+        }
+      };
+      return (
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl p-6">
+            <h3 className="text-lg font-bold mb-4">选择运营商模板</h3>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {templates.map(t => (
+                <button key={t.id} onClick={() => onSelect(t.id)} className={`border-2 rounded-xl transition-all ${selectedId === t.id ? 'border-blue-500 scale-105' : 'border-gray-200'}`}>
+                  {t.mainBg ? <img src={t.mainBg} className="w-full h-40 object-cover" /> : <div className="w-full h-40 flex items-center justify-center" style={{ backgroundColor: t.bgColor }}><span className="text-white font-bold">{t.name}</span></div>}
+                  <div className="bg-black/50 text-white text-center py-2">{t.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          {selectedId && (
+            <div className="bg-white rounded-xl p-6">
+              <h3 className="text-lg font-bold mb-4">上传模板图片</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm mb-2">主图模板 (999×999)</label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400" onClick={() => document.getElementById('main-upload').click()}>
+                    <i data-lucide="upload" className="w-8 h-8 mx-auto mb-2 text-gray-400"></i>
+                    <span className="text-gray-500">点击上传</span>
+                  </div>
+                  <input id="main-upload" type="file" className="hidden" onChange={(e) => handleUpload(selectedId, 'mainBg', e)} />
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">详情图模板 (999×2648)</label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400" onClick={() => document.getElementById('detail-upload').click()}>
+                    <i data-lucide="upload" className="w-8 h-8 mx-auto mb-2 text-gray-400"></i>
+                    <span className="text-gray-500">点击上传</span>
+                  </div>
+                  <input id="detail-upload" type="file" className="hidden" onChange={(e) => handleUpload(selectedId, 'detailBg', e)} />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const PositionEditor = ({ positions, setPositions, type, selectedKey, onSelect, onRemove, operator }) => {
+      const pos = type === 'main' ? positions[operator]?.main : positions[operator]?.detail;
+      const keys = type === 'main' ? [
+        { key: 'ageLimit', label: '年龄限制' },
+        { key: 'cardName', label: '套餐名称' },
+        { key: 'dataVolume', label: '流量总量' },
+        { key: 'dataBreakdown', label: '流量细分' },
+        { key: 'callMinutes', label: '通话分钟数' },
+        { key: 'features', label: '套餐亮点' },
+        { key: 'price', label: '优惠月租' },
+        { key: 'promptText', label: '预存/首充话费' }
+      ] : [
+        { key: 'title', label: '套餐名称' },
+        { key: 'ageLimit', label: '年龄限制' },
+        { key: 'monthFee', label: '优惠月租' },
+        { key: 'dataVolume', label: '流量总量' },
+        { key: 'callMinutes', label: '通话分钟数' },
+        { key: 'features', label: '套餐亮点' },
+        { key: 'promptText', label: '预存/首充话费' },
+        { key: 'activateMethod', label: '激活方式' },
+        { key: 'detailIntro', label: '详情介绍' }
+      ];
+      const selectedPos = selectedKey ? pos[selectedKey] : null;
+      const update = (field, value) => {
+        if (selectedKey) {
+          setPositions(prev => ({
+            ...prev,
+            [operator]: {
+              ...prev[operator],
+              [type]: {
+                ...prev[operator][type],
+                [selectedKey]: { ...prev[operator][type][selectedKey], [field]: value }
+              }
+            }
+          }));
+        }
+      };
+      const handleAddField = (key) => {
+        const defaultPos = INITIAL_TEXT_POSITIONS[operator]?.[type]?.[key];
+        if (defaultPos) {
+          setPositions(prev => ({
+            ...prev,
+            [operator]: {
+              ...prev[operator],
+              [type]: {
+                ...prev[operator][type],
+                [key]: { ...defaultPos }
+              }
+            }
+          }));
+          onSelect(type, key);
+        }
+      };
+      const availableKeys = keys.filter(k => pos[k.key]);
+      const deletedKeys = keys.filter(k => !pos[k.key]);
+      return (
+        <div className="bg-white rounded-xl p-4">
+          <h4 className="font-bold text-gray-700 mb-3">{type === 'main' ? '主图' : '详情图'}字段调整</h4>
+          <div className="space-y-2 mb-4">
+            {availableKeys.map(k => (
+              <button key={k.key} onClick={() => onSelect(type, k.key)} className={`w-full text-left px-3 py-2 rounded text-sm transition ${selectedKey === k.key ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-600 hover:bg-gray-50'}`}>
+                {k.label}
+              </button>
+            ))}
+          </div>
+          {deletedKeys.length > 0 && (
+            <div className="mb-4 pt-3 border-t border-gray-200">
+              <p className="text-xs text-gray-500 mb-2">已删除字段（点击添加）：</p>
+              <div className="space-y-2">
+                {deletedKeys.map(k => (
+                  <button key={k.key} onClick={() => handleAddField(k.key)} className="w-full text-left px-3 py-2 rounded text-sm transition bg-gray-100 text-gray-500 hover:bg-green-50 hover:text-green-600 border border-dashed border-gray-300">
+                    <i data-lucide="plus" className="w-3 h-3 inline mr-2"></i>{k.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {selectedPos && (
+            <div className="space-y-3 pt-3 border-t">
+              <div className="grid grid-cols-2 gap-2">
+                <div><label className="text-xs text-blue-600 block mb-1">位置X</label><input type="number" value={selectedPos.x} onChange={(e) => update('x', parseInt(e.target.value))} className="w-full px-2 py-1 text-xs border rounded" /></div>
+                <div><label className="text-xs text-blue-600 block mb-1">位置Y</label><input type="number" value={selectedPos.y} onChange={(e) => update('y', parseInt(e.target.value))} className="w-full px-2 py-1 text-xs border rounded" /></div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div><label className="text-xs text-purple-600 block mb-1">字号</label><div className="flex items-center gap-2"><input type="range" min="12" max="400" value={selectedPos.fontSize} onChange={(e) => update('fontSize', parseInt(e.target.value))} className="flex-1" /><span className="text-xs">{selectedPos.fontSize}</span></div></div>
+                <div><label className="text-xs text-indigo-600 block mb-1">旋转</label><div className="flex items-center gap-2"><input type="range" min="-180" max="180" value={selectedPos.rotation || 0} onChange={(e) => update('rotation', parseInt(e.target.value))} className="flex-1" /><span className="text-xs">{selectedPos.rotation || 0}°</span></div></div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div><label className="text-xs text-orange-600 block mb-1">字重</label><div className="flex items-center gap-2"><input type="range" min="100" max="900" step="100" value={selectedPos.fontWeight || 700} onChange={(e) => update('fontWeight', parseInt(e.target.value))} className="flex-1" /><span className="text-xs">{selectedPos.fontWeight || 700}</span></div></div>
+                <div><label className="text-xs text-green-600 block mb-1">颜色</label><input type="color" value={selectedPos.color} onChange={(e) => update('color', e.target.value)} className="w-full h-10 rounded" /></div>
+              </div>
+              <select value={selectedPos.fontFamily} onChange={(e) => update('fontFamily', e.target.value)} className="w-full px-3 py-2 text-xs border rounded">
+                <option value="KaiTi">楷体</option>
+                <option value="SimSun">宋体</option>
+                <option value="SimHei">黑体</option>
+                <option value="Microsoft YaHei">微软雅黑</option>
+                <option value="Arial">Arial</option>
+              </select>
+              <div className="grid grid-cols-2 gap-2">
+                <div><label className="text-xs text-gray-600 block mb-1">宽度</label><div className="flex items-center gap-2"><input type="range" min="50" max="1500" value={selectedPos.width || 200} onChange={(e) => update('width', parseInt(e.target.value))} className="flex-1" /><span className="text-xs">{selectedPos.width || 200}</span></div></div>
+                <div><label className="text-xs text-gray-600 block mb-1">高度</label><div className="flex items-center gap-2"><input type="range" min="20" max="2000" value={selectedPos.height || 50} onChange={(e) => update('height', parseInt(e.target.value))} className="flex-1" /><span className="text-xs">{selectedPos.height || 50}</span></div></div>
+              </div>
+              <button onClick={() => onRemove(type, selectedKey)} className="w-full py-2 text-red-500 text-sm hover:bg-red-50 rounded">删除此字段</button>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const PreviewPanel = ({ cards, templates, textPositions, setTextPositions, onGenerate, loading, selectedKey, onTextSelect }) => {
+      const [isDragging, setIsDragging] = useState(false);
+      const [previewOperator, setPreviewOperator] = useState(cards.length > 0 ? cards[0].operator : 'mobile');
+      const mainRef = useRef(null);
+      const detailRef = useRef(null);
+      const mainCanvasRef = useRef(null);
+      const detailCanvasRef = useRef(null);
+      const dragRef = useRef({});
+      const tempPosRef = useRef({});
+
+      useEffect(() => {
+        if (cards.length > 0) {
+          setPreviewOperator(cards[0].operator);
+        }
+      }, [cards]);
+
+      const handleDragStart = (clientX, clientY, textKey) => {
+        setIsDragging(true);
+        const isDetail = textKey.startsWith('detail_');
+        const key = isDetail ? textKey.replace('detail_', '') : textKey;
+        const scaleX = isDetail ? 0.2803 : 0.3203;
+        const scaleY = isDetail ? 0.2798 : 0.3203;
+        const positions = isDetail ? textPositions[previewOperator]?.detail : textPositions[previewOperator]?.main;
+        dragRef.current = { textKey, key, isDetail, scaleX, scaleY, startX: clientX - positions[key].x * scaleX, startY: clientY - positions[key].y * scaleY };
+        tempPosRef.current = { ...textPositions };
+      };
+
+      const handleMouseDown = (e, textKey) => {
+        e.preventDefault();
+        handleDragStart(e.clientX, e.clientY, textKey);
+      };
+
+      const handleTouchStart = (e, textKey) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        handleDragStart(touch.clientX, touch.clientY, textKey);
+      };
+
+      useEffect(() => {
+        const handleDragMove = (clientX, clientY) => {
+          if (!isDragging) return;
+          const { textKey, key, isDetail, scaleX, scaleY, startX, startY } = dragRef.current;
+          const newX = Math.round((clientX - startX) / scaleX);
+          const newY = Math.round((clientY - startY) / scaleY);
+          const type = isDetail ? 'detail' : 'main';
+          setTextPositions(prev => ({
+            ...prev,
+            [previewOperator]: {
+              ...prev[previewOperator],
+              [type]: {
+                ...prev[previewOperator][type],
+                [key]: { ...prev[previewOperator][type][key], x: newX, y: newY }
+              }
+            }
+          }));
+        };
+
+        const handleMouseMove = (e) => handleDragMove(e.clientX, e.clientY);
+        const handleTouchMove = (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          handleDragMove(touch.clientX, touch.clientY);
+        };
+
+        const handleDragEnd = () => setIsDragging(false);
+
+        if (isDragging) {
+          document.addEventListener('mousemove', handleMouseMove);
+          document.addEventListener('touchmove', handleTouchMove, { passive: false });
+          document.addEventListener('mouseup', handleDragEnd);
+          document.addEventListener('touchend', handleDragEnd);
+        }
+        return () => {
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('touchmove', handleTouchMove);
+          document.removeEventListener('mouseup', handleDragEnd);
+          document.removeEventListener('touchend', handleDragEnd);
+        };
+      }, [isDragging, setTextPositions, previewOperator]);
+
+      const handleCanvasClick = (e, type) => {
+        const canvas = e.currentTarget;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
+        const pos = type === 'main' ? textPositions[previewOperator]?.main : textPositions[previewOperator]?.detail;
+        
+        for (const [key, p] of Object.entries(pos || {})) {
+          if (x >= p.x && x <= p.x + (p.width || 200) && y >= p.y && y <= p.y + (p.height || 50)) {
+            onTextSelect(type, key);
+            return;
+          }
+        }
+      };
+      
+      const handleCanvasMouseDown = (e, type) => {
+        const canvas = e.currentTarget;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
+        const pos = type === 'main' ? textPositions[previewOperator]?.main : textPositions[previewOperator]?.detail;
+        
+        for (const [key, p] of Object.entries(pos || {})) {
+          if (x >= p.x && x <= p.x + (p.width || 200) && y >= p.y && y <= p.y + (p.height || 50)) {
+            const displayScaleX = rect.width / canvas.width;
+            const displayScaleY = rect.height / canvas.height;
+            dragRef.current = { 
+              textKey: `${type}_${key}`, 
+              key, 
+              isDetail: type === 'detail', 
+              scaleX: displayScaleX, 
+              scaleY: displayScaleY,
+              startX: e.clientX - p.x * displayScaleX, 
+              startY: e.clientY - p.y * displayScaleY 
+            };
+            tempPosRef.current = { ...textPositions };
+            setIsDragging(true);
+            return;
+          }
+        }
+      };
+      
+      const imageCache = useRef({});
+
+      useEffect(() => {
+        if (cards.length > 0) {
+          const currentCard = cards[0];
+          const currentTemplate = templates.find(t => t.id === currentCard.operator) || templates[0];
+          const mainCanvas = mainCanvasRef.current;
+          const detailCanvas = detailCanvasRef.current;
+          
+          const renderCanvas = (canvas, type) => {
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            const drawText = () => {
+              const pos = type === 'main' ? textPositions[previewOperator]?.main : textPositions[previewOperator]?.detail;
+              Object.entries(pos || {}).forEach(([key, p]) => {
+                ctx.font = `${p.fontWeight} ${p.fontSize}px "${p.fontFamily}"`;
+                ctx.fillStyle = p.color;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                let text = '';
+                if (type === 'main') {
+                  switch(key) {
+                    case 'ageLimit': text = currentCard.ageLimit; break;
+                    case 'cardName': text = currentCard.cardName; break;
+                    case 'dataVolume': text = currentCard.dataVolume; break;
+                    case 'dataBreakdown': text = currentCard.dataBreakdown; break;
+                    case 'callMinutes': text = currentCard.callMinutes; break;
+                    case 'features': text = currentCard.features; break;
+                    case 'price': text = currentCard.price; break;
+                    case 'promptText': text = currentCard.promptText; break;
+                  }
+                } else {
+                  switch(key) {
+                    case 'title': text = currentCard.cardName; break;
+                    case 'ageLimit': text = currentCard.ageLimit; break;
+                    case 'monthFee': text = currentCard.price; break;
+                    case 'dataVolume': text = currentCard.dataVolume; break;
+                    case 'callMinutes': text = currentCard.callMinutes; break;
+                    case 'features': text = currentCard.features; break;
+                    case 'promptText': text = currentCard.promptText; break;
+                    case 'activateMethod': text = currentCard.activateMethod; break;
+                    case 'detailIntro': text = currentCard.detailIntro; break;
+                  }
+                }
+                
+                const lines = text.split('\n');
+                const lineHeight = p.fontSize * 1.2;
+                
+                if (p.rotation && p.rotation !== 0) {
+                  ctx.save();
+                  ctx.translate(p.x, p.y);
+                  ctx.rotate((p.rotation * Math.PI) / 180);
+                  lines.forEach((line, i) => {
+                    ctx.fillText(line, 0, i * lineHeight);
+                  });
+                  ctx.restore();
+                } else {
+                  lines.forEach((line, i) => {
+                    ctx.fillText(line, p.x, p.y + i * lineHeight);
+                  });
+                }
+              });
+            };
+            
+            const bgUrl = type === 'main' ? currentTemplate.mainBg : currentTemplate.detailBg;
+            
+            if (bgUrl) {
+              if (imageCache.current[bgUrl]) {
+                ctx.drawImage(imageCache.current[bgUrl], 0, 0, width, height);
+                drawText();
+              } else {
+                ctx.fillStyle = currentTemplate.bgColor;
+                ctx.fillRect(0, 0, width, height);
+                drawText();
+                
+                const img = new Image();
+                img.onload = () => {
+                  imageCache.current[bgUrl] = img;
+                  ctx.drawImage(img, 0, 0, width, height);
+                  drawText();
+                };
+                img.onerror = () => {
+                  ctx.fillStyle = currentTemplate.bgColor;
+                  ctx.fillRect(0, 0, width, height);
+                  drawText();
+                };
+                img.src = bgUrl;
+              }
+            } else {
+              ctx.fillStyle = currentTemplate.bgColor;
+              ctx.fillRect(0, 0, width, height);
+              drawText();
+            }
+          };
+          
+          requestAnimationFrame(() => {
+            renderCanvas(mainCanvas, 'main');
+            renderCanvas(detailCanvas, 'detail');
+          });
+        }
+      }, [cards, templates, textPositions, previewOperator]);
+
+      const generateImage = useCallback(async (card, type) => {
+        const cardTemplate = templates.find(t => t.id === card.operator) || templates[0];
+        const canvas = document.createElement('canvas');
+        canvas.width = 999;
+        canvas.height = type === 'main' ? 999 : 2648;
+        const ctx = canvas.getContext('2d');
+        if (type === 'main' && cardTemplate.mainBg) {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          await new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+            img.src = cardTemplate.mainBg;
+          });
+          ctx.drawImage(img, 0, 0, 999, 999);
+        } else if (type === 'detail' && cardTemplate.detailBg) {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          await new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+            img.src = cardTemplate.detailBg;
+          });
+          ctx.drawImage(img, 0, 0, 999, 2648);
+        } else {
+          ctx.fillStyle = cardTemplate.bgColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        const pos = type === 'main' ? textPositions[card.operator]?.main : textPositions[card.operator]?.detail;
+        Object.entries(pos).forEach(([key, p]) => {
+          ctx.font = `${p.fontWeight} ${p.fontSize}px "${p.fontFamily}"`;
+          ctx.fillStyle = p.color;
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'top';
+          let text = '';
+          if (type === 'main') {
+            switch(key) {
+              case 'ageLimit': text = card.ageLimit; break;
+              case 'cardName': text = card.cardName; break;
+              case 'dataVolume': text = card.dataVolume; break;
+              case 'dataBreakdown': text = card.dataBreakdown; break;
+              case 'callMinutes': text = card.callMinutes; break;
+              case 'features': text = card.features; break;
+              case 'price': text = card.price; break;
+              case 'promptText': text = card.promptText; break;
+            }
+          } else {
+            switch(key) {
+              case 'title': text = card.cardName; break;
+              case 'ageLimit': text = card.ageLimit; break;
+              case 'monthFee': text = card.price; break;
+              case 'dataVolume': text = card.dataVolume; break;
+              case 'callMinutes': text = card.callMinutes; break;
+              case 'features': text = card.features; break;
+              case 'promptText': text = card.promptText; break;
+              case 'activateMethod': text = card.activateMethod; break;
+              case 'detailIntro': text = card.detailIntro; break;
+            }
+          }
+          
+          const lines = text.split('\n');
+          const lineHeight = p.fontSize * 1.2;
+          
+          if (p.rotation && p.rotation !== 0) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            lines.forEach((line, i) => {
+              ctx.fillText(line, 0, i * lineHeight);
+            });
+            ctx.restore();
+          } else {
+            lines.forEach((line, i) => {
+              ctx.fillText(line, p.x, p.y + i * lineHeight);
+            });
+          }
+        });
+        return canvas.toDataURL('image/png');
+      }, [templates, textPositions]);
+
+      const handleGenerate = async () => {
+        onGenerate(true);
+        const zip = new JSZip();
+        for (const card of cards) {
+          const mainDataUrl = await generateImage(card, 'main');
+          if (mainDataUrl) zip.file(`${card.cardName}_主图.png`, mainDataUrl.split(',')[1], { base64: true });
+          const detailDataUrl = await generateImage(card, 'detail');
+          if (detailDataUrl) zip.file(`${card.cardName}_详情图.png`, detailDataUrl.split(',')[1], { base64: true });
+        }
+        const content = await zip.generateAsync({ type: 'blob' });
+        saveAs(content, '流量卡宣传图.zip');
+        onGenerate(false);
+      };
+
+      if (cards.length === 0) {
+        return (
+          <div className="bg-white rounded-xl p-6 text-center text-gray-500">
+            <i data-lucide="image" className="w-16 h-16 mx-auto mb-4 opacity-50"></i>
+            <p>请先添加套餐数据</p>
+          </div>
+        );
+      }
+
+      return (
+        <div className="bg-white rounded-xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-bold">预览</h3>
+            <button onClick={handleGenerate} disabled={loading} className="px-6 py-2 bg-blue-500 text-white font-bold rounded-lg disabled:opacity-50">
+              <i data-lucide="download" className="w-5 h-5 inline mr-2"></i>
+              {loading ? '生成中...' : '批量生成下载'}
+            </button>
+          </div>
+          <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-bold text-gray-700 mb-3">选择运营商模板</h4>
+            <div className="flex gap-2 mb-4">
+              {templates.map(t => (
+                <button key={t.id} onClick={() => setPreviewOperator(t.id)} className={`px-4 py-2 rounded-lg font-medium transition ${previewOperator === t.id ? 'bg-blue-500 text-white' : 'bg-white text-gray-600 border border-gray-300'}`} style={{ backgroundColor: previewOperator === t.id ? t.bgColor : undefined }}>
+                  {t.name}
+                </button>
+              ))}
+            </div>
+            
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="col-span-1 lg:col-span-2 space-y-4">
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-gray-100 px-4 py-2 flex justify-between">
+                  <span className="text-sm font-medium">主图 (999 × 999)</span>
+                  <span className="text-xs text-blue-600">点击文字可拖动</span>
+                </div>
+                <div className="bg-gray-50 p-2 overflow-auto" ref={mainRef} style={{ minHeight: '320px' }}>
+                  <div className="relative overflow-hidden" style={{ width: '320px', height: '320px', margin: '0 auto' }}>
+                    <canvas 
+                      ref={mainCanvasRef} 
+                      width="999" 
+                      height="999" 
+                      className="cursor-pointer"
+                      style={{ width: '999px', height: '999px', transform: 'scale(0.3203)', transformOrigin: 'top left' }}
+                      onClick={(e) => handleCanvasClick(e, 'main')}
+                      onMouseDown={(e) => handleCanvasMouseDown(e, 'main')}
+                    ></canvas>
+                  </div>
+                </div>
+              </div>
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-gray-100 px-4 py-2 flex justify-between">
+                  <span className="text-sm font-medium">详情图 (999 × 2648)</span>
+                  <span className="text-xs text-blue-600">点击文字可拖动</span>
+                </div>
+                <div className="bg-gray-50 p-2 overflow-auto" ref={detailRef} style={{ minHeight: '750px' }}>
+                  <div className="relative overflow-hidden" style={{ width: '280px', height: '741px', margin: '0 auto' }}>
+                    <canvas 
+                      ref={detailCanvasRef} 
+                      width="999" 
+                      height="2648" 
+                      className="cursor-pointer"
+                      style={{ width: '999px', height: '2648px', transform: 'scale(0.2803)', transformOrigin: 'top left' }}
+                      onClick={(e) => handleCanvasClick(e, 'detail')}
+                      onMouseDown={(e) => handleCanvasMouseDown(e, 'detail')}
+                    ></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <PositionEditor
+                positions={textPositions}
+                setPositions={setTextPositions}
+                type="main"
+                operator={previewOperator}
+                selectedKey={selectedKey.main}
+                onSelect={(type, key) => onTextSelect(type, key)}
+                onRemove={(type, key) => setTextPositions(prev => ({ ...prev, [previewOperator]: { ...prev[previewOperator], [type]: Object.fromEntries(Object.entries(prev[previewOperator][type]).filter(([k]) => k !== key)) } }))}
+              />
+              <PositionEditor
+                positions={textPositions}
+                setPositions={setTextPositions}
+                type="detail"
+                operator={previewOperator}
+                selectedKey={selectedKey.detail}
+                onSelect={(type, key) => onTextSelect(type, key)}
+                onRemove={(type, key) => setTextPositions(prev => ({ ...prev, [previewOperator]: { ...prev[previewOperator], [type]: Object.fromEntries(Object.entries(prev[previewOperator][type]).filter(([k]) => k !== key)) } }))}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const App = () => {
+      const [cards, setCards] = useState(() => {
+        try {
+          const saved = localStorage.getItem('cardGenerator_cards');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            parsed.forEach(card => {
+              if (!card.operator) card.operator = 'mobile';
+              if (!card.activateMethod) card.activateMethod = '下单后自动激活';
+            });
+            return parsed;
+          }
+        } catch(e) {}
+        return [INITIAL_CARD];
+      });
+      const [selectedTemplateId, setSelectedTemplateId] = useState(() => {
+        try {
+          const saved = localStorage.getItem('cardGenerator_selectedTemplateId');
+          return saved || 'mobile';
+        } catch(e) { return 'mobile'; }
+      });
+      const [activeTab, setActiveTab] = useState('input');
+      const [loading, setLoading] = useState(false);
+      const [textPositions, setTextPositions] = useState(() => {
+        try {
+          const defaultSaved = localStorage.getItem('cardGenerator_defaultPositions');
+          const saved = localStorage.getItem('cardGenerator_textPositions');
+          if (!defaultSaved && !saved) {
+            return INITIAL_TEXT_POSITIONS;
+          }
+          let parsed = defaultSaved ? JSON.parse(defaultSaved) : JSON.parse(saved);
+          if (parsed.main && parsed.detail) {
+            parsed = {
+              mobile: { main: { ...parsed.main }, detail: { ...parsed.detail } },
+              unicom: { main: { ...parsed.main }, detail: { ...parsed.detail } },
+              telecom: { main: { ...parsed.main }, detail: { ...parsed.detail } },
+              broadcast: { main: { ...parsed.main }, detail: { ...parsed.detail } }
+            };
+          }
+          ['mobile', 'unicom', 'telecom', 'broadcast'].forEach(op => {
+            if (!parsed[op]) parsed[op] = { ...INITIAL_TEXT_POSITIONS[op] };
+            ['main', 'detail'].forEach(type => {
+              if (!parsed[op][type]) parsed[op][type] = { ...INITIAL_TEXT_POSITIONS[op][type] };
+              Object.entries(parsed[op][type]).forEach(([key, p]) => {
+                if (typeof p.fontWeight === 'string') {
+                  parsed[op][type][key].fontWeight = p.fontWeight === 'bold' ? 700 : 400;
+                }
+              });
+            });
+          });
+          return parsed;
+        } catch(e) {
+          return INITIAL_TEXT_POSITIONS;
+        }
+      });
+      const [templates, setTemplates] = useState(() => {
+        try {
+          const saved = localStorage.getItem('cardGenerator_templates');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            parsed.forEach(t => {
+              if (!t.textColor) t.textColor = '#000000';
+              if (!t.priceColor) t.priceColor = '#FFD700';
+              if (t.id === 'ctc') t.id = 'telecom';
+            });
+            if (!parsed.find(t => t.id === 'broadcast')) {
+              parsed.push({ id: 'broadcast', name: '广电模板', mainBg: '', detailBg: '', bgColor: '#FFE4B5', textColor: '#FF8C00', priceColor: '#FFD700' });
+            }
+            return parsed;
+          }
+        } catch(e) {}
+        return [
+          { id: 'mobile', name: '移动模板', mainBg: '', detailBg: '', bgColor: '#90EE90', textColor: '#228B22', priceColor: '#FFD700' },
+          { id: 'unicom', name: '联通模板', mainBg: '', detailBg: '', bgColor: '#FFB6C1', textColor: '#DC143C', priceColor: '#FFD700' },
+          { id: 'telecom', name: '电信模板', mainBg: '', detailBg: '', bgColor: '#87CEEB', textColor: '#0066CC', priceColor: '#FFD700' },
+          { id: 'broadcast', name: '广电模板', mainBg: '', detailBg: '', bgColor: '#FFE4B5', textColor: '#FF8C00', priceColor: '#FFD700' }
+        ];
+      });
+      const [selectedKey, setSelectedKey] = useState({ main: null, detail: null });
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+      const selectedTemplate = templates.find(t => t.id === selectedTemplateId) || templates[0];
+
+      const handleTextSelect = (type, key) => {
+        setSelectedKey(prev => ({ ...prev, [type]: key, [type === 'main' ? 'detail' : 'main']: null }));
+      };
+
+      useEffect(() => {
+        try {
+          lucide.createIcons();
+        } catch(e) {
+          console.log('lucide icons failed to load');
+        }
+      }, [activeTab, mobileMenuOpen]);
+
+      useEffect(() => {
+        localStorage.setItem('cardGenerator_cards', JSON.stringify(cards));
+      }, [cards]);
+
+      useEffect(() => {
+        localStorage.setItem('cardGenerator_selectedTemplateId', selectedTemplateId);
+      }, [selectedTemplateId]);
+
+      useEffect(() => {
+        localStorage.setItem('cardGenerator_textPositions', JSON.stringify(textPositions));
+      }, [textPositions]);
+
+      useEffect(() => {
+        localStorage.setItem('cardGenerator_templates', JSON.stringify(templates));
+      }, [templates]);
+
+      return (
+        <div>
+          <header className="bg-blue-500 text-white py-4 sm:py-6">
+            <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+              <h1 className="text-lg sm:text-2xl font-bold">流量卡宣传图批量生成工具</h1>
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2">
+                <i data-lucide="menu" className="w-6 h-6"></i>
+              </button>
+            </div>
+          </header>
+          <nav className="bg-white sticky top-0 z-10">
+            <div className={`max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-2 lg:gap-4 ${mobileMenuOpen ? 'block' : 'hidden lg:flex'}`}>
+              <button onClick={() => { setActiveTab('input'); setMobileMenuOpen(false); }} className={`px-4 sm:px-6 py-3 font-medium text-left lg:text-center ${activeTab === 'input' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600'}`}>
+                <i data-lucide="file-text" className="w-5 h-5 inline mr-2"></i>数据输入
+              </button>
+              <button onClick={() => { setActiveTab('template'); setMobileMenuOpen(false); }} className={`px-4 sm:px-6 py-3 font-medium text-left lg:text-center ${activeTab === 'template' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600'}`}>
+                <i data-lucide="palette" className="w-5 h-5 inline mr-2"></i>模板选择
+              </button>
+              <button onClick={() => { setActiveTab('preview'); setMobileMenuOpen(false); }} className={`px-4 sm:px-6 py-3 font-medium text-left lg:text-center ${activeTab === 'preview' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600'}`}>
+                <i data-lucide="eye" className="w-5 h-5 inline mr-2"></i>预览生成
+              </button>
+              
+              <button onClick={() => {
+                localStorage.setItem('cardGenerator_defaultPositions', JSON.stringify(textPositions));
+                alert('当前字段格式已保存为默认值！');
+              }} className="px-4 py-3 text-gray-500 hover:text-green-500 text-left lg:text-center">
+                <i data-lucide="save" className="w-5 h-5 inline mr-2"></i>保存为默认
+              </button>
+            </div>
+          </nav>
+          <main className="max-w-7xl mx-auto px-4 py-8">
+            {activeTab === 'input' && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-4">
+                    <h2 className="text-xl font-bold">套餐数据</h2>
+                    <div className="flex flex-wrap gap-2">
+                      <button onClick={() => setCards([...cards, { ...INITIAL_CARD, id: Date.now().toString(), cardName: `套餐${cards.length + 1}` }])} className="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg">
+                        <i data-lucide="plus" className="w-5 h-5 inline mr-2"></i>添加套餐
+                      </button>
+                      <button onClick={() => {
+                        const template = `\uFEFF运营商,套餐名称,年龄限制,流量总量,流量细分,通话分钟数,套餐亮点,优惠月租,预存/首充话费,激活方式,详情介绍
+"中国移动","慧缘卡","18-24周岁","340G","310G通用+30G定向","500","三年优惠 五个会员","50","办理预存100话费享优惠","下单后自动激活","激活后首月免费使用"
+"中国联通","星耀卡","18-30周岁","200G","180G通用+20G定向","300","两年优惠 三个会员","39","下单立减20元","手动扫码激活","适合学生使用"`;
+                        const blob = new Blob([template], { type: 'text/csv;charset=utf-8;' });
+                        saveAs(blob, '套餐模板.csv');
+                      }} className="px-4 py-2 bg-green-500 text-white font-medium rounded-lg">
+                        <i data-lucide="download" className="w-5 h-5 inline mr-2"></i>下载模板
+                      </button>
+                      <button onClick={() => {
+                        const escapeCSV = (value) => {
+                          if (!value) return '""';
+                          const escaped = value.toString().replace(/"/g, '""');
+                          return `"${escaped}"`;
+                        };
+                        const lines = [
+                          '\uFEFF运营商,套餐名称,年龄限制,流量总量,流量细分,通话分钟数,套餐亮点,优惠月租,预存/首充话费,激活方式,详情介绍'
+                        ];
+                        cards.forEach(card => {
+                          const operatorNames = { mobile: '中国移动', unicom: '中国联通', telecom: '中国电信', broadcast: '中国广电' };
+                          lines.push([
+                            escapeCSV(operatorNames[card.operator] || card.operator),
+                            escapeCSV(card.cardName),
+                            escapeCSV(card.ageLimit),
+                            escapeCSV(card.dataVolume),
+                            escapeCSV(card.dataBreakdown),
+                            escapeCSV(card.callMinutes),
+                            escapeCSV(card.features),
+                            escapeCSV(card.price),
+                            escapeCSV(card.promptText),
+                            escapeCSV(card.activateMethod),
+                            escapeCSV(card.detailIntro)
+                          ].join(','));
+                        });
+                        const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+                        saveAs(blob, '套餐数据.csv');
+                      }} className="px-4 py-2 bg-orange-500 text-white font-medium rounded-lg">
+                        <i data-lucide="download" className="w-5 h-5 inline mr-2"></i>导出数据
+                      </button>
+                      <label className="px-4 py-2 bg-purple-500 text-white font-medium rounded-lg cursor-pointer">
+                        <i data-lucide="upload" className="w-5 h-5 inline mr-2"></i>CSV导入
+                        <input type="file" accept=".csv" className="hidden" onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const text = event.target.result;
+                            const parseCSV = (csvText) => {
+                              const rows = [];
+                              let currentRow = [];
+                              let currentValue = '';
+                              let inQuotes = false;
+                              for (let i = 0; i < csvText.length; i++) {
+                                const char = csvText[i];
+                                if (char === '"') {
+                                  if (inQuotes && csvText[i + 1] === '"') {
+                                    currentValue += '"';
+                                    i++;
+                                  } else {
+                                    inQuotes = !inQuotes;
+                                  }
+                                } else if (char === ',' && !inQuotes) {
+                                  currentRow.push(currentValue.trim());
+                                  currentValue = '';
+                                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                                  if (char === '\r' && csvText[i + 1] === '\n') i++;
+                                  currentRow.push(currentValue.trim());
+                                  if (currentRow.length > 0) {
+                                    rows.push(currentRow);
+                                  }
+                                  currentRow = [];
+                                  currentValue = '';
+                                } else {
+                                  currentValue += char;
+                                }
+                              }
+                              if (currentValue !== '' || currentRow.length > 0) {
+                                currentRow.push(currentValue.trim());
+                                rows.push(currentRow);
+                              }
+                              return rows;
+                            };
+                            const rows = parseCSV(text);
+                            if (rows.length < 2) {
+                              alert('CSV文件格式不正确');
+                              return;
+                            }
+                            const headers = rows[0];
+                            const newCards = rows.slice(1).map((values, index) => {
+                              const card = { ...INITIAL_CARD, id: Date.now().toString() + '_' + index };
+                              headers.forEach((header, i) => {
+                                switch(header.trim()) {
+                                  case '运营商': 
+                                    const op = values[i] || '';
+                                    if (op.includes('移动')) card.operator = 'mobile';
+                                    else if (op.includes('联通')) card.operator = 'unicom';
+                                    else if (op.includes('电信')) card.operator = 'telecom';
+                                    else if (op.includes('广电')) card.operator = 'broadcast';
+                                    break;
+                                  case '套餐名称': card.cardName = values[i] || ''; break;
+                                  case '年龄限制': card.ageLimit = values[i] || ''; break;
+                                  case '流量总量': card.dataVolume = values[i] || ''; break;
+                                  case '流量细分': card.dataBreakdown = values[i] || ''; break;
+                                  case '通话分钟数': card.callMinutes = values[i] || ''; break;
+                                  case '套餐亮点': card.features = values[i] || ''; break;
+                                  case '优惠月租': card.price = values[i] || ''; break;
+                                  case '提示文字':
+                                  case '预存/首充话费': card.promptText = values[i] || ''; break;
+                                  case '激活方式': card.activateMethod = values[i] || ''; break;
+                                  case '详情介绍': card.detailIntro = values[i] || ''; break;
+                                }
+                              });
+                              return card;
+                            });
+                            setCards(newCards);
+                            alert(`成功导入 ${newCards.length} 条数据`);
+                          };
+                          reader.readAsText(file, 'utf-8');
+                        }} />
+                      </label>
+                    </div>
+                  </div>
+                  {cards.map(card => (
+                    <CardForm key={card.id} card={card} onChange={(updated) => setCards(cards.map(c => c.id === card.id ? updated : c))} onRemove={setCards.bind(null, cards.filter(c => c.id !== card.id))} />
+                  ))}
+                </div>
+              </div>
+            )}
+            {activeTab === 'template' && (
+              <TemplateSelector
+                templates={templates}
+                selectedId={selectedTemplateId}
+                onSelect={setSelectedTemplateId}
+                onTemplateUpdate={(id, updates) => setTemplates(templates.map(t => t.id === id ? { ...t, ...updates } : t))}
+              />
+            )}
+            {activeTab === 'preview' && (
+              <PreviewPanel
+                cards={cards}
+                templates={templates}
+                textPositions={textPositions}
+                setTextPositions={setTextPositions}
+                onGenerate={setLoading}
+                loading={loading}
+                selectedKey={selectedKey}
+                onTextSelect={handleTextSelect}
+              />
+            )}
+          </main>
+          <footer className="bg-gray-800 text-gray-400 py-6 mt-12">
+            <div className="max-w-7xl mx-auto px-4 text-center text-sm">流量卡宣传图批量生成工具</div>
+            <div className="max-w-7xl mx-auto px-4 text-center mt-2 text-xs text-blue-400">龙创科技 loonginno.cn</div>
+            <div className="max-w-7xl mx-auto px-4 text-center mt-3">
+              <button onClick={() => {
+                if (confirm('确定要清除所有保存的数据吗？')) {
+                  localStorage.clear();
+                  window.location.reload();
+                }
+              }} className="text-xs text-gray-600 hover:text-red-400 transition">
+                <i data-lucide="rotate-ccw" className="w-3 h-3 inline mr-1"></i>重置所有数据
+              </button>
+            </div>
+          </footer>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    try {
+      root.render(<App />);
+    } catch(e) {
+      console.error('App render error:', e);
+      document.getElementById('root').innerHTML = '<div class="p-8 text-center"><h1 class="text-2xl font-bold text-red-500 mb-4">应用加载失败</h1><p class="text-gray-600">请刷新页面重试，或清除浏览器缓存</p><button onclick="localStorage.clear();location.reload()" class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg">重置数据并刷新</button></div>';
+    }
+    setTimeout(() => {
+      try {
+        lucide.createIcons();
+      } catch(e) {}
+    }, 100);
+  </script>
+</body>
+</html>
