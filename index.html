@@ -13,10 +13,12 @@
             outline: none;
             -webkit-tap-highlight-color: transparent;
         }
+
         :focus, :active, :focus-visible {
             outline: none !important;
             box-shadow: none !important;
         }
+
         html, body {
             width: 100%;
             overflow-x: hidden;
@@ -25,6 +27,7 @@
             -webkit-font-smoothing: antialiased;
             -webkit-overflow-scrolling: touch;
         }
+
         :root {
             --bg-gradient: radial-gradient(circle at 20% 30%, rgba(248, 246, 254, 0.94), #f3f1f8);
             --bg-card: rgba(255, 255, 255, 0.62);
@@ -58,6 +61,7 @@
             --tool-btn-bg-light: rgba(0,0,0,0.04);
             --tool-btn-bg-dark: rgba(255,255,255,0.06);
         }
+
         [data-theme="dark"] {
             --bg-gradient: radial-gradient(circle at 20% 30%, #232336, #181822);
             --bg-card: rgba(44, 44, 62, 0.6);
@@ -80,12 +84,14 @@
             --btn3-dark-border: rgba(175, 82, 222, 0.32);
             --btn3-dark-hover: linear-gradient(135deg, rgba(64,56,92,0.72), rgba(74,66,106,0.82));
         }
+
         body {
             background: var(--bg-gradient);
             color: var(--text-primary);
             transition: background 0.36s ease, color 0.36s ease;
             min-height: 100vh;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -93,6 +99,7 @@
             position: relative;
             z-index: 2;
         }
+
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -105,6 +112,7 @@
             from { opacity: 0; transform: translateY(-12px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .logo {
             display: flex;
             align-items: center;
@@ -134,6 +142,7 @@
             color: var(--text-muted);
             letter-spacing: 0.3px;
         }
+
         .theme-toggle {
             width: 44px;
             height: 44px;
@@ -153,6 +162,7 @@
             background: var(--main-light);
             transform: scale(1.06);
         }
+
         .hero {
             text-align: center;
             padding: 60px 0 40px;
@@ -196,6 +206,7 @@
             margin: 0 auto 32px;
             line-height: 1.55;
         }
+
         .btn-wrap-all {
             display: flex;
             flex-wrap: wrap;
@@ -212,6 +223,7 @@
             display: flex;
             justify-content: center;
         }
+
         /* 主功能大按钮样式 */
         .unified-btn {
             width: var(--btn-width);
@@ -244,18 +256,21 @@
             transform: translateX(4px);
             opacity: 1;
         }
+
         .btn-1 { background: var(--btn1-light-bg); border: 1px solid var(--btn1-light-border); }
         .btn-1:hover { background: var(--btn1-light-hover); }
         .btn-2 { background: var(--btn2-light-bg); border: 1px solid var(--btn2-light-border); }
         .btn-2:hover { background: var(--btn2-light-hover); }
         .btn-3 { background: var(--btn3-light-bg); border: 1px solid var(--btn3-light-border); }
         .btn-3:hover { background: var(--btn3-light-hover); }
+
         [data-theme="dark"] .btn-1 { background: var(--btn1-dark-bg); border: 1px solid var(--btn1-dark-border); }
         [data-theme="dark"] .btn-1:hover { background: var(--btn1-dark-hover); }
         [data-theme="dark"] .btn-2 { background: var(--btn2-dark-bg); border: 1px solid var(--btn2-dark-border); }
         [data-theme="dark"] .btn-2:hover { background: var(--btn2-dark-hover); }
         [data-theme="dark"] .btn-3 { background: var(--btn3-dark-bg); border: 1px solid var(--btn3-dark-border); }
         [data-theme="dark"] .btn-3:hover { background: var(--btn3-dark-hover); }
+
         .unified-btn:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
@@ -265,6 +280,7 @@
             transform: translateY(1px) scale(0.98);
             box-shadow: var(--shadow-sm);
         }
+
         .features {
             display: flex;
             flex-wrap: wrap;
@@ -322,6 +338,7 @@
             color: var(--text-secondary);
             line-height: 1.55;
         }
+
         /* 次要工具区域 */
         .tool-area {
             text-align: center;
@@ -356,6 +373,7 @@
             color: var(--text-primary);
             background: var(--border-color);
         }
+
         .footer {
             text-align: center;
             padding: 40px 20px 30px;
@@ -365,9 +383,10 @@
             margin-top: 20px;
             letter-spacing: 0.3px;
         }
+
         .welcome-modal-overlay,
         .shop-modal-overlay,
-        .contact-modal-overlay {
+        .wechat-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -384,7 +403,7 @@
         }
         .welcome-modal-overlay.active,
         .shop-modal-overlay.active,
-        .contact-modal-overlay.active {
+        .wechat-modal-overlay.active {
             visibility: visible;
             background: rgba(0, 0, 0, 0.45);
             pointer-events: auto;
@@ -392,11 +411,12 @@
         @media (min-width: 768px) {
             .welcome-modal-overlay.active,
             .shop-modal-overlay.active,
-            .contact-modal-overlay.active {
+            .wechat-modal-overlay.active {
                 backdrop-filter: blur(8px);
                 -webkit-backdrop-filter: blur(8px);
             }
         }
+
         .welcome-modal,
         .shop-modal-container {
             background: var(--modal-bg);
@@ -412,7 +432,7 @@
             overflow-y: auto;
             pointer-events: auto !important;
         }
-        .contact-modal {
+        .wechat-modal {
             background: var(--modal-bg);
             border-radius: var(--radius-lg);
             text-align: center;
@@ -420,87 +440,61 @@
             transform: scale(0.93);
             opacity: 0;
             transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.36s ease;
-            width: 360px;
-            max-width: 92%;
-            max-height: 86vh;
+            max-width: 90%;
+            will-change: transform, opacity;
+            max-height: 85vh;
             overflow-y: auto;
-            padding: 24px;
             pointer-events: auto !important;
+            padding: 36px 28px;
         }
+
         .active .welcome-modal,
         .active .shop-modal-container,
-        .active .contact-modal {
+        .active .wechat-modal {
             transform: scale(1);
             opacity: 1;
         }
+
         .welcome-modal { max-width: 460px; padding: 44px 36px; }
         .shop-modal-container { max-width: 520px; padding: 40px 32px; }
-        .contact-modal h3 {
-            font-size: 25px;
-            font-weight: 700;
+        .wechat-modal { max-width: 400px; }
+
+        .welcome-modal h3,
+        .shop-modal-container h3,
+        .wechat-modal h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
             color: var(--text-primary);
-            margin-bottom: 10px;
         }
-        .contact-modal p.desc-1 {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-        .contact-modal p.desc-2 {
-            font-size: 14px;
+        .welcome-modal .welcome-message,
+        .shop-modal-container p,
+        .wechat-modal p {
+            font-size: 16px;
+            line-height: 1.6;
             color: var(--text-secondary);
             margin-bottom: 18px;
         }
-        /*直达客服按钮，圆润，和页面统一radius-full*/
-        .contact-service-btn {
-            display: inline-flex;
-            align-items: center;
+
+        .qr-row {
+            display: flex;
             justify-content: center;
-            padding: 14px 34px;
-            font-size: 15px;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(135deg, #6360e0, #4b49c4);
-            border: none;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            box-shadow: 0 10px 24px -10px rgba(88, 86, 214, 0.45);
-            transition: all 0.24s ease;
+            gap: 16px;
+            margin: 0 auto 24px;
         }
-        .contact-service-btn:hover {
-            background: linear-gradient(135deg, #7573ee, #5b59d4);
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px -10px rgba(88, 86, 214, 0.55);
-        }
-        .contact-service-btn:active {
-            transform: translateY(0);
-        }
-        /*商务合作二维码独立区域，留白不乱*/
-        .contact-business-title {
-            margin-top: 22px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .contact-business-qr {
-            width: 130px;
-            height: 130px;
+        .qr-col { flex: 1; text-align: center; }
+        .qr-tip { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+        .qrcode-img {
+            width: 140px;
+            height: auto;
             margin: 0 auto;
             background: #f3f4f6;
             border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
-        .contact-business-qr img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        .qrcode-img img { width: 100%; height: auto; display: block; }
+
         .shop-options {
             display: flex;
             flex-direction: column;
@@ -536,7 +530,8 @@
             transform: translateX(4px);
             opacity: 1;
         }
-        .close-shop-modal {
+
+        .close-shop-modal, .close-wechat-btn {
             background: transparent;
             border: 1px solid var(--border-color);
             padding: 12px 32px;
@@ -548,12 +543,13 @@
             transition: all 0.24s ease;
             display: inline-block;
         }
-        .close-shop-modal:hover {
+        .close-shop-modal:hover, .close-wechat-btn:hover {
             background: var(--main-color);
             color: #fff;
             border-color: transparent;
             transform: translateY(-2px);
         }
+
         .welcome-btn {
             background: linear-gradient(135deg, #343f58, #283244);
             border: none;
@@ -569,6 +565,7 @@
             background: var(--main-color);
             transform: translateY(-2px);
         }
+
         .back-top {
             position: fixed;
             bottom: 28px;
@@ -602,6 +599,7 @@
             color: #fff;
             transform: translateY(-3px);
         }
+
         @media (max-width:720px){
             .btn-wrap-all,.row-two{flex-direction:column;width:100%;}
             .unified-btn{width:100% !important;}
@@ -610,19 +608,9 @@
             .unified-btn{font-size:16px;}
             .feat-card{min-width:100%;}
             .theme-toggle{width:40px;height:40px;font-size:16px;}
+            .qrcode-img{width:120px;}
+            .qr-row{gap:10px;}
             .hero{padding:40px 0 30px;}
-            .contact-modal {
-                width: 92%;
-                padding: 22px;
-            }
-            .contact-service-btn {
-                padding: 13px 30px;
-                font-size: 14px;
-            }
-            .contact-business-qr {
-                width: 120px;
-                height: 120px;
-            }
         }
     </style>
 </head>
@@ -638,21 +626,24 @@
         </div>
         <div class="theme-toggle" id="themeToggle">☾</div>
     </div>
+
     <div class="hero">
         <div class="hero-badge">✦ 数字通信引领者</div>
         <h1>极速连接 · <span class="highlight">智简未来</span></h1>
         <div class="subhead">为企业与个人提供高性价比通信方案，5G专网、聚合流量，技术驱动效率。</div>
     </div>
+
     <!-- 顶部仅保留3个核心主按钮，移除工具 -->
     <div class="btn-wrap-all">
         <div class="row-two">
             <button class="unified-btn btn-1" id="openShopBtn">流量店铺 · 精选套餐</button>
-            <button class="unified-btn btn-2" id="openContactBtn">联系咨询 · 直达客服</button>
+            <button class="unified-btn btn-2" id="openWechatBtn">联系咨询 · 微信对接</button>
         </div>
         <div class="row-one-center">
             <a href="business.html" class="unified-btn btn-3">商务渠道 · 全网招商加盟</a>
         </div>
     </div>
+
     <div class="features">
         <div class="feat-card">
             <div class="feat-icon">⚡</div>
@@ -670,15 +661,18 @@
             <p>专业顾问全程服务，售后无忧</p>
         </div>
     </div>
+
     <!-- 次要工具放置卡片下方，弱化展示 -->
     <div class="tool-area">
         <div class="tool-tip-text">配套辅助工具</div>
         <a href="https://loonginno.cn/tool.html" target="_blank" class="tool-light-btn">流量卡宣传图批量生成工具</a>
     </div>
+
     <div class="footer">
         <div>© <script>const startYear=2026,nowYear=new Date().getFullYear();document.write(startYear===nowYear?startYear:startYear+"-"+nowYear);</script> 龙创科技 · All Rights Reserved.</div>
     </div>
 </div>
+
 <!-- 欢迎弹窗 -->
 <div class="welcome-modal-overlay" id="welcomeModal">
     <div class="welcome-modal">
@@ -689,6 +683,7 @@
         <button class="welcome-btn" id="closeWelcomeBtn">开始探索</button>
     </div>
 </div>
+
 <!-- 五个店铺选项弹窗 -->
 <div class="shop-modal-overlay" id="shopModal">
     <div class="shop-modal-container">
@@ -704,22 +699,32 @@
         <button class="close-shop-modal" id="closeShopBtn">关闭</button>
     </div>
 </div>
-<!-- 联系客服弹窗【新增】 -->
-<div class="contact-modal-overlay" id="contactModal">
-    <div class="contact-modal">
-        <h3>联系入口</h3>
-        <p class="desc-1">办卡咨询点击下方按钮直达客服</p>
-        <p class="desc-2">公众号：星联消息助手</p>
-        <!-- 圆润醒目直达客服按钮 -->
-        <button class="contact-service-btn" id="goServiceBtn">直达客服</button>
-        <!-- 商务合作二维码独立区块 -->
-        <div class="contact-business-title">商务合作</div>
-        <div class="contact-business-qr">
-            <img src="weixin2.jpg" alt="商务合作微信">
+
+<!-- 微信弹窗 -->
+<div class="wechat-modal-overlay" id="wechatModal">
+    <div class="wechat-modal">
+        <h3>扫码联系</h3>
+        <p>添加微信，获取一对一咨询<br>公众号:星联消息助手</p>
+        <div class="qr-row">
+            <div class="qr-col">
+                <div class="qr-tip">办卡咨询</div>
+                <div class="qrcode-img">
+                    <img src="weixin1.jpg" alt="办卡微信">
+                </div>
+            </div>
+            <div class="qr-col">
+                <div class="qr-tip">商务合作</div>
+                <div class="qrcode-img">
+                    <img src="weixin2.jpg" alt="合作微信">
+                </div>
+            </div>
         </div>
+        <button class="close-wechat-btn" id="closeWechatBtn">关闭</button>
     </div>
 </div>
+
 <div class="back-top" id="backTopBtn">↑</div>
+
 <script>
 (function() {
     const themeToggle = document.getElementById('themeToggle');
@@ -741,7 +746,9 @@
             themeToggle.textContent = '☀';
         }
     });
+
     let isClosing = false;
+
     const welcomeModal = document.getElementById('welcomeModal');
     const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
     setTimeout(() => {
@@ -750,6 +757,7 @@
             document.body.style.overflow = 'hidden';
         }
     }, 200);
+
     const closeWelcome = () => {
         if (isClosing) return;
         isClosing = true;
@@ -761,6 +769,7 @@
     welcomeModal.addEventListener('click', (e) => {
         if (e.target === welcomeModal) closeWelcome();
     });
+
     const shopModal = document.getElementById('shopModal');
     const openShopBtn = document.getElementById('openShopBtn');
     const closeShopBtn = document.getElementById('closeShopBtn');
@@ -781,6 +790,7 @@
     shopModal.addEventListener('click', (e) => {
         if (e.target === shopModal) closeShopModal();
     });
+
     const realLinks = [
         'https://app.xiuyuetongxun.com/index?k=RlpGNHRIcjZGT3c9',
         'https://172.lot-ml.com/ProductEn/Index/65bea861799e3bbe',
@@ -800,34 +810,26 @@
         });
     });
 
-    //=====新增联系弹窗JS=====
-    const contactModal = document.getElementById('contactModal');
-    const openContactBtn = document.getElementById('openContactBtn');
-    const goServiceBtn = document.getElementById('goServiceBtn');
+    const wechatModal = document.getElementById('wechatModal');
+    const openWechatBtn = document.getElementById('openWechatBtn');
+    const closeWechatBtn = document.getElementById('closeWechatBtn');
 
-    const openContact = () => {
+    const openWechat = () => {
         if (isClosing) return;
-        contactModal.classList.add('active');
+        wechatModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
-
-    const closeContact = () => {
+    const closeWechat = () => {
         if (isClosing) return;
         isClosing = true;
-        contactModal.classList.remove('active');
+        wechatModal.classList.remove('active');
         document.body.style.overflow = '';
         setTimeout(() => { isClosing = false; }, 350);
     };
-
-    openContactBtn.addEventListener('click', openContact);
-    //直达客服跳转链接，点击关闭弹窗并新开页面
-    goServiceBtn.addEventListener('click', () => {
-        closeContact();
-        window.open('kf.loonginno.cn', '_blank');
-    });
-    //点击弹窗空白区域关闭
-    contactModal.addEventListener('click', (e) => {
-        if (e.target === contactModal) closeContact();
+    openWechatBtn.addEventListener('click', openWechat);
+    closeWechatBtn.addEventListener('click', closeWechat);
+    wechatModal.addEventListener('click', (e) => {
+        if (e.target === wechatModal) closeWechat();
     });
 
     const backTop = document.getElementById('backTopBtn');
