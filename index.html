@@ -367,7 +367,7 @@
         }
         .welcome-modal-overlay,
         .shop-modal-overlay,
-        .wechat-modal-overlay {
+        .contact-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -384,7 +384,7 @@
         }
         .welcome-modal-overlay.active,
         .shop-modal-overlay.active,
-        .wechat-modal-overlay.active {
+        .contact-modal-overlay.active {
             visibility: visible;
             background: rgba(0, 0, 0, 0.45);
             pointer-events: auto;
@@ -392,7 +392,7 @@
         @media (min-width: 768px) {
             .welcome-modal-overlay.active,
             .shop-modal-overlay.active,
-            .wechat-modal-overlay.active {
+            .contact-modal-overlay.active {
                 backdrop-filter: blur(8px);
                 -webkit-backdrop-filter: blur(8px);
             }
@@ -412,7 +412,7 @@
             overflow-y: auto;
             pointer-events: auto !important;
         }
-        .wechat-modal {
+        .contact-modal {
             background: var(--modal-bg);
             border-radius: var(--radius-lg);
             text-align: center;
@@ -420,56 +420,87 @@
             transform: scale(0.93);
             opacity: 0;
             transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.36s ease;
-            max-width: 90%;
-            will-change: transform, opacity;
-            max-height: 85vh;
+            width: 360px;
+            max-width: 92%;
+            max-height: 86vh;
             overflow-y: auto;
+            padding: 24px;
             pointer-events: auto !important;
-            padding: 36px 28px;
         }
         .active .welcome-modal,
         .active .shop-modal-container,
-        .active .wechat-modal {
+        .active .contact-modal {
             transform: scale(1);
             opacity: 1;
         }
         .welcome-modal { max-width: 460px; padding: 44px 36px; }
         .shop-modal-container { max-width: 520px; padding: 40px 32px; }
-        .wechat-modal { max-width: 400px; }
-        .welcome-modal h3,
-        .shop-modal-container h3,
-        .wechat-modal h3 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 16px;
+        .contact-modal h3 {
+            font-size: 25px;
+            font-weight: 700;
             color: var(--text-primary);
+            margin-bottom: 10px;
         }
-        .welcome-modal .welcome-message,
-        .shop-modal-container p,
-        .wechat-modal p {
-            font-size: 16px;
-            line-height: 1.6;
+        .contact-modal p.desc-1 {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .contact-modal p.desc-2 {
+            font-size: 14px;
             color: var(--text-secondary);
             margin-bottom: 18px;
         }
-        .qr-row {
-            display: flex;
+        /*直达客服按钮，圆润，和页面统一radius-full*/
+        .contact-service-btn {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin: 0 auto 24px;
+            padding: 14px 34px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #6360e0, #4b49c4);
+            border: none;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            box-shadow: 0 10px 24px -10px rgba(88, 86, 214, 0.45);
+            transition: all 0.24s ease;
         }
-        .qr-col { flex: 1; text-align: center; }
-        .qr-tip { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
-        .qrcode-img {
-            width: 140px;
-            height: auto;
+        .contact-service-btn:hover {
+            background: linear-gradient(135deg, #7573ee, #5b59d4);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px -10px rgba(88, 86, 214, 0.55);
+        }
+        .contact-service-btn:active {
+            transform: translateY(0);
+        }
+        /*商务合作二维码独立区域，留白不乱*/
+        .contact-business-title {
+            margin-top: 22px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .contact-business-qr {
+            width: 130px;
+            height: 130px;
             margin: 0 auto;
             background: #f3f4f6;
             border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
-        .qrcode-img img { width: 100%; height: auto; display: block; }
+        .contact-business-qr img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
         .shop-options {
             display: flex;
             flex-direction: column;
@@ -505,7 +536,7 @@
             transform: translateX(4px);
             opacity: 1;
         }
-        .close-shop-modal, .close-wechat-btn {
+        .close-shop-modal {
             background: transparent;
             border: 1px solid var(--border-color);
             padding: 12px 32px;
@@ -517,7 +548,7 @@
             transition: all 0.24s ease;
             display: inline-block;
         }
-        .close-shop-modal:hover, .close-wechat-btn:hover {
+        .close-shop-modal:hover {
             background: var(--main-color);
             color: #fff;
             border-color: transparent;
@@ -571,88 +602,6 @@
             color: #fff;
             transform: translateY(-3px);
         }
-        /* ========== 【联系入口弹窗 新增样式】 ========== */
-        .contact-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2100;
-            visibility: hidden;
-            transition: visibility 0.36s, background 0.36s ease;
-            pointer-events: none;
-        }
-        .contact-modal-overlay.active {
-            visibility: visible;
-            background: rgba(0, 0, 0, 0.45);
-            pointer-events: auto;
-        }
-        @media (min-width: 768px) {
-            .contact-modal-overlay.active {
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-            }
-        }
-        .contact-modal {
-            background: var(--modal-bg);
-            border-radius: var(--radius-lg);
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            transform: scale(0.93);
-            opacity: 0;
-            transition: transform 0.36s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.36s ease;
-            width: 320px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 28px 20px;
-            pointer-events: auto !important;
-        }
-        .active .contact-modal {
-            transform: scale(1);
-            opacity: 1;
-        }
-        .contact-modal .business-text {
-            text-align: right;
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom:12px;
-        }
-        .contact-modal h3 {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--text-primary);
-            margin-bottom:10px;
-        }
-        .contact-modal p.desc-1 {
-            font-size:14px;
-            color:var(--text-secondary);
-            margin-bottom:4px;
-        }
-        .contact-modal p.desc-2 {
-            font-size:14px;
-            color:var(--text-secondary);
-            margin-bottom:20px;
-        }
-        /* 这里就是缩小后的小按钮 */
-        .contact-small-btn{
-            padding:6px 16px;
-            font-size:13px;
-            border-radius:8px;
-            border:1px solid var(--border-color);
-            background:var(--bg-card);
-            color:var(--text-primary);
-            cursor:pointer;
-            transition:0.2s;
-        }
-        .contact-small-btn:hover{
-            background:var(--main-color);
-            color:#fff;
-        }
         @media (max-width:720px){
             .btn-wrap-all,.row-two{flex-direction:column;width:100%;}
             .unified-btn{width:100% !important;}
@@ -661,10 +610,19 @@
             .unified-btn{font-size:16px;}
             .feat-card{min-width:100%;}
             .theme-toggle{width:40px;height:40px;font-size:16px;}
-            .qrcode-img{width:120px;}
-            .qr-row{gap:10px;}
             .hero{padding:40px 0 30px;}
-            .contact-modal{width:90%;}
+            .contact-modal {
+                width: 92%;
+                padding: 22px;
+            }
+            .contact-service-btn {
+                padding: 13px 30px;
+                font-size: 14px;
+            }
+            .contact-business-qr {
+                width: 120px;
+                height: 120px;
+            }
         }
     </style>
 </head>
@@ -689,7 +647,7 @@
     <div class="btn-wrap-all">
         <div class="row-two">
             <button class="unified-btn btn-1" id="openShopBtn">流量店铺 · 精选套餐</button>
-            <button class="unified-btn btn-2" id="openContactBtn">联系入口</button>
+            <button class="unified-btn btn-2" id="openContactBtn">联系咨询 · 直达客服</button>
         </div>
         <div class="row-one-center">
             <a href="business.html" class="unified-btn btn-3">商务渠道 · 全网招商加盟</a>
@@ -746,37 +704,19 @@
         <button class="close-shop-modal" id="closeShopBtn">关闭</button>
     </div>
 </div>
-<!-- 【新增：联系入口弹窗，和截图完全匹配 + 小按钮】 -->
+<!-- 联系客服弹窗【新增】 -->
 <div class="contact-modal-overlay" id="contactModal">
     <div class="contact-modal">
-        <div class="business-text">商务合作</div>
         <h3>联系入口</h3>
         <p class="desc-1">办卡咨询点击下方按钮直达客服</p>
-        <p class="desc-2">公众号:星联消息助手</p>
-        <!-- 小型按钮，尺寸很小，不占大片空间 -->
-        <button class="contact-small-btn" id="closeContactBtn">直达客服</button>
-    </div>
-</div>
-<!-- 微信弹窗 -->
-<div class="wechat-modal-overlay" id="wechatModal">
-    <div class="wechat-modal">
-        <h3>扫码联系</h3>
-        <p>添加微信，获取一对一咨询<br>公众号:星联消息助手</p>
-        <div class="qr-row">
-            <div class="qr-col">
-                <div class="qr-tip">办卡咨询</div>
-                <div class="qrcode-img">
-                    <img src="weixin1.jpg" alt="办卡微信">
-                </div>
-            </div>
-            <div class="qr-col">
-                <div class="qr-tip">商务合作</div>
-                <div class="qrcode-img">
-                    <img src="weixin2.jpg" alt="合作微信">
-                </div>
-            </div>
+        <p class="desc-2">公众号：星联消息助手</p>
+        <!-- 圆润醒目直达客服按钮 -->
+        <button class="contact-service-btn" id="goServiceBtn">直达客服</button>
+        <!-- 商务合作二维码独立区块 -->
+        <div class="contact-business-title">商务合作</div>
+        <div class="contact-business-qr">
+            <img src="weixin2.jpg" alt="商务合作微信">
         </div>
-        <button class="close-wechat-btn" id="closeWechatBtn">关闭</button>
     </div>
 </div>
 <div class="back-top" id="backTopBtn">↑</div>
@@ -860,15 +800,17 @@
         });
     });
 
-    // =========联系入口弹窗JS逻辑========
+    //=====新增联系弹窗JS=====
     const contactModal = document.getElementById('contactModal');
     const openContactBtn = document.getElementById('openContactBtn');
-    const closeContactBtn = document.getElementById('closeContactBtn');
+    const goServiceBtn = document.getElementById('goServiceBtn');
+
     const openContact = () => {
         if (isClosing) return;
         contactModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
+
     const closeContact = () => {
         if (isClosing) return;
         isClosing = true;
@@ -876,32 +818,18 @@
         document.body.style.overflow = '';
         setTimeout(() => { isClosing = false; }, 350);
     };
+
     openContactBtn.addEventListener('click', openContact);
-    closeContactBtn.addEventListener('click', closeContact);
+    //直达客服跳转链接，点击关闭弹窗并新开页面
+    goServiceBtn.addEventListener('click', () => {
+        closeContact();
+        window.open('https://kf.loonginno.cn', '_blank');
+    });
+    //点击弹窗空白区域关闭
     contactModal.addEventListener('click', (e) => {
         if (e.target === contactModal) closeContact();
     });
 
-    const wechatModal = document.getElementById('wechatModal');
-    const openWechatBtn = document.getElementById('openWechatBtn');
-    const closeWechatBtn = document.getElementById('closeWechatBtn');
-    const openWechat = () => {
-        if (isClosing) return;
-        wechatModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
-    const closeWechat = () => {
-        if (isClosing) return;
-        isClosing = true;
-        wechatModal.classList.remove('active');
-        document.body.style.overflow = '';
-        setTimeout(() => { isClosing = false; }, 350);
-    };
-    openWechatBtn.addEventListener('click', openWechat);
-    closeWechatBtn.addEventListener('click', closeWechat);
-    wechatModal.addEventListener('click', (e) => {
-        if (e.target === wechatModal) closeWechat();
-    });
     const backTop = document.getElementById('backTopBtn');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 400) backTop.classList.add('show');
